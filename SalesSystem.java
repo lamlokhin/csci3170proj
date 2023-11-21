@@ -2,7 +2,7 @@
 
 import java.io.*;
 public class SalesSystem{
-    static int main_menu(){
+    static void main_menu() throws NumberFormatException, IOException{
         System.out.print("Welcome to sales system!\n\n"+
                           "-----Main menu-----\n"+
                           "What kinds of operation would you like to perform?\n"+
@@ -13,31 +13,26 @@ public class SalesSystem{
                           "Enter Your Choice: "); 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input;
-        try {
-            input = Integer.parseInt(in.readLine());
-            if (input == 1){
-                admin_menu();
-            }
-            if (input == 2){
-                salesperson_menu();
-            }
-            if (input == 3){
-                manager_menu();
-            }
-            return 0;
-
-        } catch (IOException e) {
-            System.err.println("Cannot read input");
-            e.printStackTrace();
+        
+        input = Integer.parseInt(in.readLine());
+        if (input == 1){
+            admin_menu();
         }
-        return 0;
+        if (input == 2){
+            salesperson_menu();
+        }
+        if (input == 3){
+            manager_menu();
+        }
+        
+        return;
     }
     
     private static void salesperson_menu(){
         return; 
     }
 
-    private static void manager_menu(){
+    private static void manager_menu() throws NumberFormatException, IOException {
         System.out.print("\n-----Operations for manager menu-----\n"+
                            "What kinds of operation would you like to perform?\n"+
                            "1. List all salespersons\n"+
@@ -48,32 +43,28 @@ public class SalesSystem{
                            "Enter Your Choice: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input;
-        try {
-            input = Integer.parseInt(in.readLine());
-            if (input == 1){
-                list_salespersons();
-            }
-            if (input == 2){
-                count_sales();
-            }
-            if (input == 3){
-                show_sales_value();
-            }
-            if (input == 4){
-                show_popular_parts();
-            }
-            if (input == 5){
-                main_menu();
-            }
-            return;
-        } catch (IOException e) {
-            System.err.println("Cannot read input");
-            e.printStackTrace();
+        
+        input = Integer.parseInt(in.readLine());
+        if (input == 1){
+            list_salespersons();
         }
+        if (input == 2){
+            count_sales();
+        }
+        if (input == 3){
+            show_sales_value();
+        }
+        if (input == 4){
+            show_popular_parts();
+        }
+        if (input == 5){
+            main_menu();
+        }
+            
         return;
     }
 
-    private static void admin_menu() {
+    private static void admin_menu() throws NumberFormatException, IOException {
         System.out.print("\n-----Operations for administrator menu----\n"+
                          "What kinds of operation would you like to perform?\n"+
                          "1. Create all tables\n"+
@@ -84,36 +75,58 @@ public class SalesSystem{
                          "Enter Your Choice: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input;
-        try {
-            input = Integer.parseInt(in.readLine());
-            if (input == 1){
-                create_database();                
-            }
-            if (input == 2){
-                delete_database();
-            }
-            if (input == 3){
-                load_data();
-            }
-            if (input == 4){
-                show_content();
-            }
-            if (input == 5){
-                main_menu();
-            }
-            return;
-        } catch (IOException e) {
-            System.err.println("Cannot read input");
-            e.printStackTrace();
-        }  
+        
+        input = Integer.parseInt(in.readLine());
+        if (input == 1){
+            create_database();                
+        }
+        if (input == 2){
+            delete_database();
+        }
+        if (input == 3){
+            load_data();
+        }
+        if (input == 4){
+            show_content();
+        }
+        if (input == 5){
+            main_menu();
+        }
+        
         return;
     }
 
-    static void list_salespersons(){
+    static void list_salespersons() throws NumberFormatException, IOException {
+        System.out.print("Choose ordering:\n"+
+                           "1. By ascending order\n"+
+                           "2. By descending order\n"+
+                           "Choose the list ordering: ");
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int input_order;
+        
+        input_order = Integer.parseInt(in.readLine());
+        // retrieve list in requested order
+        if (input_order == 1){
+            // retrieve in ascending
+        }
+        if (input_order == 2){
+            // retrieve in descending
+        }
+        // print list
+        System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
+        return;
 
     }
-    static void count_sales(){
-
+    static void count_sales() throws NumberFormatException, IOException{
+        System.out.print("Type in the lower bound for years of experience: ");
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int lower_bound = Integer.parseInt(in.readLine());
+        System.out.print("Type in the upper bound for years of experience: ");
+        int upper_bound = Integer.parseInt(in.readLine());
+        // retrieve count of sales
+        // print list
+        System.out.println("Transaction Record:\n"+
+                           "| ID | Name | Years of Experience | Number of Transaction");
     }
     static void show_sales_value(){
 
@@ -134,38 +147,32 @@ public class SalesSystem{
         System.out.print("Done! Database is removed!");
         return;
     }
-    static void load_data(){
+    static void load_data() throws NumberFormatException, IOException {
         System.out.print("Type in the Source Data Folder Path: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String inputPath;
-        try {
-            inputPath = in.readLine();
-            System.err.print("Processing...");
-            // read files and load data from inputPath
-            System.err.println("Done! Data is inputted to the database!");
-            return;
-        } catch (IOException e) {
-            System.err.println("Cannot read input");
-            e.printStackTrace();
-        }
+        
+        inputPath = in.readLine();
+        System.err.print("Processing...");
+        // read files and load data from inputPath
+        System.err.println("Done! Data is inputted to the database!");
+        return;
+        
     }
-    static void show_content(){
+    static void show_content() throws NumberFormatException, IOException {
         System.out.print("Which table would you like to show: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String inputTable;
-        try {
-            inputTable = in.readLine();
-            System.err.println("Content of the table "+inputTable+": ");
-            // Retrieve table from database
-            // For each tuple; each field, print line
-            return;
-        } catch (IOException e) {
-            System.err.println("Cannot read input");
-            e.printStackTrace();
-        }
+        
+        inputTable = in.readLine();
+        System.err.println("Content of the table "+inputTable+": ");
+        // Retrieve table from database
+        // For each tuple; each field, print line
+        System.out.println("| p_id | p_name | p_price | m_id | c_id | p_quantity | p_warranty |");
+        return; 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws NumberFormatException, IOException{
         main_menu();
         
     }
