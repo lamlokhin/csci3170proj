@@ -3,8 +3,7 @@
 import java.io.*;
 public class SalesSystem{
     static void main_menu() throws NumberFormatException, IOException{
-        System.out.print("Welcome to sales system!\n\n"+
-                          "-----Main menu-----\n"+
+        System.out.print("\n-----Main menu-----\n"+
                           "What kinds of operation would you like to perform?\n"+
                           "1. Operations for administrator\n"+
                           "2. Operations for salesperson\n"+
@@ -114,6 +113,8 @@ public class SalesSystem{
         }
         // print list
         System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
+
+        main_menu();
         return;
 
     }
@@ -128,6 +129,7 @@ public class SalesSystem{
         System.out.println("Transaction Record:\n"+
                            "| ID | Name | Years of Experience | Number of Transaction");
         System.out.println("End of Query");
+        main_menu();
     }
     static void show_manufacturer(){
         // retrieve manufacturers in decending order of total sales value
@@ -143,18 +145,21 @@ public class SalesSystem{
         // print the parts
         System.out.println("| Part ID | Part Name | No. of Transaction |");
         System.out.println("End of Query");
+        main_menu();
     }
 
-    static void create_database(){
+    static void create_database() throws NumberFormatException, IOException{
         System.out.print("Processing...");
         // initialize database
-        System.out.print("Done! Database is initialized!");
+        System.out.println("Done! Database is initialized!");
+        main_menu();
         return;
     }
-    static void delete_database(){
+    static void delete_database() throws NumberFormatException, IOException{
         System.out.print("Processing...");
         // initialize database
-        System.out.print("Done! Database is removed!");
+        System.out.println("Done! Database is removed!");
+        main_menu();
         return;
     }
     static void load_data() throws NumberFormatException, IOException {
@@ -166,6 +171,7 @@ public class SalesSystem{
         System.err.print("Processing...");
         // read files and load data from inputPath
         System.err.println("Done! Data is inputted to the database!");
+        main_menu();
         return;
         
     }
@@ -178,11 +184,14 @@ public class SalesSystem{
         System.err.println("Content of the table "+inputTable+": ");
         // Retrieve table from database
         // For each tuple; each field, print line
-        System.out.println("| p_id | p_name | p_price | m_id | c_id | p_quantity | p_warranty |");
+        // System.out.println("| p_id | p_name | p_price | m_id | c_id | p_quantity | p_warranty |");
+
+        main_menu();
         return; 
     }
 
     public static void main(String[] args) throws NumberFormatException, IOException{
+        System.out.println("Welcome to sales system!");
         main_menu();
         
     }
