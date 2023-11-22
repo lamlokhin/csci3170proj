@@ -52,7 +52,7 @@ public class SalesSystem{
             count_sales();
         }
         if (input == 3){
-            show_sales_value();
+            show_manufacturer();
         }
         if (input == 4){
             show_popular_parts();
@@ -127,12 +127,22 @@ public class SalesSystem{
         // print list
         System.out.println("Transaction Record:\n"+
                            "| ID | Name | Years of Experience | Number of Transaction");
+        System.out.println("End of Query");
     }
-    static void show_sales_value(){
-
+    static void show_manufacturer(){
+        // retrieve manufacturers in decending order of total sales value
+        System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
+        // print manufacuturers
+        System.out.println("End of Query");
     }
-    static void show_popular_parts(){
-        
+    static void show_popular_parts() throws NumberFormatException, IOException{
+        System.out.print("Type in the number of parts: ");
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int input = Integer.parseInt(in.readLine());
+        // retrieve the N most popular parts
+        // print the parts
+        System.out.println("| Part ID | Part Name | No. of Transaction |");
+        System.out.println("End of Query");
     }
 
     static void create_database(){
