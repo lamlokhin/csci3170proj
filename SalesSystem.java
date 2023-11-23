@@ -1,6 +1,8 @@
 // SalesSystem.java
 
 import java.io.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 
 public class SalesSystem {
@@ -70,47 +72,93 @@ public class SalesSystem {
         query += "from Part,Manufacturer,Category ";
         query += "where Part.cid = Category.cid and Part.mID = manufacturer.mID and";
         if (criterion == 1) {
-            query += String.format("Part.Name like %s ", "'%" + keyword + "%'");
+            query += "Part.Name like ? ";
         } else if (criterion == 2) {
-            query += String.format("Manufacturer.mName like %s ", "'%" + keyword + "%'");
+            query += "Manufacturer.mName like ? ";
         }
         if (order == 1) {
             query += "order by price ASC;";
         } else if (order == 2) {
             query += "order by price DESC;";
         }
+        // PreparedStatement preQuery=conn.prepareStatement(query);
+        // preQuery.setString(1, "'%" + keyword + "%'");
         System.out.println("contructed query is " + query);
+
+        // preQuery.executeQuery()
+
     }
 
     private static void sell_part() throws NumberFormatException, IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+        /* get part id with checking */
         System.out.print("\nEnter The Part ID:\n");
         int part_id = Integer.parseInt(in.readLine());
+        String quanCheckQuery = "Select pAvailableQuantity from Part where Part.pID = ?";
+        // PreparedStatement preQuanCheckQuery = conn.prepareStatement(quanCheckQuery);
+        // preQuanCheckQuery.setInt(1, part_id);
+        // ResultSet result1 = preQuanCheckQuery.executeQuery();
+        int availableQuantity = (int) Math.random();// result.getInt(1);
+        while (availableQuantity < 1) {
+            System.out.println(
+                    String.format("xxxErrorxxx:part with part id: %s available quantity less than 1,currently:%s\n",
+                            part_id, availableQuantity));
+            System.out.println("Enter The Part ID:");
+            part_id = Integer.parseInt(in.readLine());
+            // preQuanCheckQuery.setInt(1, part_id);
+            // result1 = preQuanCheckQuery.executeQuery();
+            // availableQuantity = result.getInt(1);
+        }
+
+        /* get salesperson id with checking */
         System.out.print("\nEnter The Salesperson ID:\n");
         int salesperson_id = Integer.parseInt(in.readLine());
-        String quanCheckQuery = String.format("Select pAvailableQuantity from Part where Part.pID = %s", part_id);
-        // PreparedStatement stmt = conn.prepareStatement(quanCheckQuery);
-        // ResultSet result = stmt.executeQuery();
-        int availableQuantity = (int) Math.random();// result.getInt(1);
-        // perform checking for quantity
-        if (availableQuantity < 1) {
-            System.out.println("xxxErrorxxx: part Cannon be sold");
-            return;
-        } else {
-            String getLastTIDQuery = "Select max(tID) from Transaction;";
-            // PreparedStatement stat = conn.prepareStatement(getLastTIDQuery);
-            // ResultSet res= stat.executeQuery();
-            int lastTID = 0;// res.getInt(1);
-            String addTransactionQuery = String
-                    .format("Insert into transaction (tID,pID,sID,tDate) values (%s,%s,%s,%s);", lastTID + 1, part_id,
-                            salesperson_id,
-                            LocalDate.now());
-            String updatePartQuanQuery = String.format("uUpdate Part set pAvailableQuantity= %s where pID= %s;",
-                    availableQuantity - 1, part_id);
-            String getUpdatedPartRecordQuery = String.format("Select pName,pAvailableQuantity from Part where pID= %s;",
-                    part_id);
-            return;
+        String salesPersonCheckQuery = "Select count(*) from salseperson where sID=?";
+        // PreparedStatement
+        // preSalesPersonCheckQuery=conn.prepareStatement(salesPersonCheckQuery);
+        // preSalesPersonCheckQuery.setInt(1, salesperson_id);
+        // ResultSet result2 = preSalesPersonCheckQuery.executeQuery();
+        Boolean salesPersonExist = (int) Math.random() > 0;// result2.getInt(1);
+        while (!salesPersonExist) {
+            System.out.println(String.format("xxxErrorxxx:SalesPerson not exist with id:%s\n", salesperson_id));
+            System.out.println("please re-enter sales person id:");
+            salesperson_id = Integer.parseInt(in.readLine());
+            // preSalesPersonCheckQuery.setInt(1, salesperson_id);
+            // result2 = preSalesPersonCheckQuery.executeQuery();
+            // salesPersonExist = result2.getInt(1);
         }
+
+        String getLastTIDQuery = "Select max(tID) from Transaction;";
+        // PreparedStatement preGetLastTIDQuery =conn.prepareStatement(getLastTIDQuery);
+        // ResultSet res3= preGetLastTIDQuery.executeQuery();
+        int lastTID = 0;// res3.getInt(1)==null?0:res3.getInt(1);
+
+        /* Inserting transaction */
+        String addTransactionQuery = "Insert into transaction (tID,pID,sID,tDate) values (?,?,?,?);";
+
+        // PreapredStatement
+        // preAddTransactionQuery=conn.prepareStatement(preAddTransactionQuery);
+        // preAddTransactionQuery.setInt(1,lastTID + 1);
+        // preAddTransactionQuery.setInt(2,part_id);
+        // preAddTransactionQuery.setint(3,salesperson_id);
+        // preAddTransacctionQuery.setDate(4,LocalDate.now().format(DateTimeFormatter.ofPattern("dd/mm/yyyy")));
+
+        /* Updating part available quantity */
+        String updatePartQuanQuery = "Update Part set pAvailableQuantity= ? where pID= ?;";
+        // PreparedStatement
+        // preUpdatePartQuanQuery=conn.prepareStatement(updatePartQuanQuery);
+        // preUpdatePartQuanQuery.setInt(1,availableQuantity-1);
+        // preUpdatePartQuanQuery.setInt(2,part_id);
+
+        /* get record after update quantity */
+        String getUpdatedPartRecordQuery = "Select pName,pAvailableQuantity from Part where pID= ?;";
+        // PreparedStatement
+        // preGetUpdatedpartRecordQuery=conn.prepareStatement(getUpdatedPartRecordQuery);
+        // preGetUpdatedpartRecordQuery.setInt(1,part_id);
+        // ResultSet res4= preGetUpdatedpartRecordQuery.executeQuery();
+
+        return;
 
     }
 
