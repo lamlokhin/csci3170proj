@@ -83,10 +83,21 @@ public class SalesSystem {
         }
         // PreparedStatement preQuery=conn.prepareStatement(query);
         // preQuery.setString(1, "'%" + keyword + "%'");
-        System.out.println("contructed query is " + query);
+        // System.out.println("contructed query is " + query);
 
-        // preQuery.executeQuery()
-
+        // ResultSet result=preQuery.executeQuery()
+        // System.out.println("| ID | Name | Manufacturer | Category | Quantity |
+        // Warrantly | Price");
+        // while (result.next()) {
+        // System.println(String.format("| %s | %s | %s | %s | %s | %s | %s |",
+        // result.getString(1),
+        // result.getString(2), result.getString(3), result.getString(4),
+        // result.getString(5),
+        // result.getString(6), result.getString(7)));
+        // }
+        // System.out.println("End of Query");
+        // preQuery.close();
+        // result.close();
     }
 
     private static void sell_part() throws NumberFormatException, IOException {
@@ -154,11 +165,24 @@ public class SalesSystem {
         /* get record after update quantity */
         String getUpdatedPartRecordQuery = "Select pName,pAvailableQuantity from Part where pID= ?;";
         // PreparedStatement
-        // preGetUpdatedpartRecordQuery=conn.prepareStatement(getUpdatedPartRecordQuery);
-        // preGetUpdatedpartRecordQuery.setInt(1,part_id);
-        // ResultSet res4= preGetUpdatedpartRecordQuery.executeQuery();
+        // preGetUpdatedPartRecordQuery=conn.prepareStatement(getUpdatedPartRecordQuery);
+        // preGetUpdatedPartRecordQuery.setInt(1,part_id);
+        // ResultSet res4= preGetUpdatedPartRecordQuery.executeQuery();
+        // System.out.println(String.format("Product: %s (id : %s) Remaining Quality:
+        // %s", res4.getString(1), part_id,
+        // res4.getString(22)));
 
-        return;
+        // preQuanCheckQuery.close();
+        // preSalesPersonCheckQuery.close();
+        // preGetLastTIDQuery.close();
+        // preAddTransactionQuery.close();
+        // preUpdatePartQuanQuery.close();
+        // preGetUpdatedPartRecordQuert.close();
+        // result1.close();
+        // result2.close();
+        // result3.close();
+        // result4.close();
+        // return;
 
     }
 
