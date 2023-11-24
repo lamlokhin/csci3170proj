@@ -1,9 +1,11 @@
 // SalesSystem.java
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 public class CSCI3170Proj{
-    static void main_menu() throws NumberFormatException, IOException, SQLException{
+    static void main_menu(Connection conn) throws NumberFormatException, IOException, SQLException{
         System.out.print("\n-----Main menu-----\n"+
                           "What kinds of operation would you like to perform?\n"+
                           "1. Operations for administrator\n"+
@@ -16,19 +18,19 @@ public class CSCI3170Proj{
 
         input = Integer.parseInt(in.readLine());
         if (input == 1) {
-            admin_menu();
+            admin_menu(conn);
         }
         if (input == 2) {
-            salesperson_menu();
+            salesperson_menu(conn);
         }
         if (input == 3) {
-            manager_menu();
+            manager_menu(conn);
         }
 
         return;
     }
 
-    private static void salesperson_menu() throws NumberFormatException, IOException, SQLException {
+    private static void salesperson_menu(Connection conn) throws NumberFormatException, IOException, SQLException {
         System.out.print("\n-----Operations for salesperson menu-----\n" +
                 "What kinds of operation would you like to perform?\n" +
                 "1. Search for part\n" +
@@ -39,19 +41,19 @@ public class CSCI3170Proj{
 
         int input = Integer.parseInt(in.readLine());
         if (input == 1) {
-            search_part();
+            search_part(conn);
         }
         if (input == 2) {
-            sell_part();
+            sell_part(conn);
         }
         if (input == 3) {
-            main_menu();
+            main_menu(conn);
         }
 
         return;
     }
 
-    private static void search_part() throws NumberFormatException, IOException {
+    private static void search_part(Connection conn) throws NumberFormatException, IOException {
         System.out.print("\nChoose the Search criterion:\n" +
                 "1. Part Name\n" +
                 "2. Manufacturer Name\n" +
@@ -97,7 +99,7 @@ public class CSCI3170Proj{
         // result.close();
     }
 
-    private static void sell_part() throws NumberFormatException, IOException {
+    private static void sell_part(Connection conn) throws NumberFormatException, IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
         /* get part id with checking */
@@ -183,7 +185,7 @@ public class CSCI3170Proj{
 
     }
 
-    private static void manager_menu() throws NumberFormatException, IOException, SQLException {
+    private static void manager_menu(Connection conn) throws NumberFormatException, IOException, SQLException {
         System.out.print("\n-----Operations for manager menu-----\n"+
                            "What kinds of operation would you like to perform?\n"+
                            "1. List all salespersons\n"+
@@ -197,24 +199,24 @@ public class CSCI3170Proj{
 
         input = Integer.parseInt(in.readLine());
         if (input == 1) {
-            list_salespersons();
+            list_salespersons(conn);
         }
         if (input == 2) {
-            count_sales();
+            count_sales(conn);
         }
         if (input == 3) {
-            show_manufacturer();
+            show_manufacturer(conn);
         }
         if (input == 4) {
-            show_popular_parts();
+            show_popular_parts(conn);
         }
         if (input == 5) {
-            main_menu();
+            main_menu(conn);
         }   
         return;
     }
 
-    private static void admin_menu() throws NumberFormatException, IOException, SQLException {
+    private static void admin_menu(Connection conn) throws NumberFormatException, IOException, SQLException {
         System.out.print("\n-----Operations for administrator menu----\n"+
                          "What kinds of operation would you like to perform?\n"+
                          "1. Create all tables\n"+
@@ -228,24 +230,24 @@ public class CSCI3170Proj{
 
         input = Integer.parseInt(in.readLine());
         if (input == 1) {
-            create_database();
+            create_database(conn);
         }
         if (input == 2) {
-            delete_database();
+            delete_database(conn);
         }
         if (input == 3) {
-            load_data();
+            load_data(conn);
         }
         if (input == 4) {
-            show_content();
+            show_content(conn);
         }
         if (input == 5) {
-            main_menu();
+            main_menu(conn);
         }
         return;
     }
 
-    static void list_salespersons() throws NumberFormatException, IOException, SQLException {
+    static void list_salespersons(Connection conn) throws NumberFormatException, IOException, SQLException {
         System.out.print("Choose ordering:\n"+
                            "1. By ascending order\n"+
                            "2. By descending order\n"+
@@ -271,11 +273,11 @@ public class CSCI3170Proj{
                               result.getString(3),
                               result.getString(4));
         }
-        main_menu();
+        main_menu(conn);
         return;
 
     }
-    static void count_sales() throws NumberFormatException, IOException, SQLException{
+    static void count_sales(Connection conn) throws NumberFormatException, IOException, SQLException{
         System.out.print("Type in the lower bound for years of experience: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int lower_bound = Integer.parseInt(in.readLine());
@@ -295,9 +297,9 @@ public class CSCI3170Proj{
                               result.getString(4));
         }
         System.out.println("End of Query");
-        main_menu();
+        main_menu(conn);
     }
-    static void show_manufacturer() throws SQLException{
+    static void show_manufacturer(Connection conn) throws SQLException{
         // retrieve manufacturers in decending order of total sales value
         ResultSet result = null;        
         // print manufacuturers
@@ -310,7 +312,7 @@ public class CSCI3170Proj{
         }
         System.out.println("End of Query");
     }
-    static void show_popular_parts() throws NumberFormatException, IOException, SQLException{
+    static void show_popular_parts(Connection conn) throws NumberFormatException, IOException, SQLException{
         System.out.print("Type in the number of parts: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input = Integer.parseInt(in.readLine());
@@ -325,21 +327,24 @@ public class CSCI3170Proj{
                               result.getString(3));
         }
         System.out.println("End of Query");
-        main_menu();
+        main_menu(conn);
     }
 
-    static void create_database() throws NumberFormatException, IOException, SQLException{
+    static void create_database(Connection conn) throws NumberFormatException, IOException, SQLException{
         System.out.print("Processing...");
         // initialize database
         System.out.println("Done! Database is initialized!");
-        main_menu();
+        main_menu(conn);
         return;
     }
-    static void delete_database() throws NumberFormatException, IOException, SQLException{
-        main_menu();
+    static void delete_database(Connection conn) throws NumberFormatException, IOException, SQLException{
+        System.out.print("Processing...");
+        // initialize database
+        System.out.println("Done! Database is removed!");
+        main_menu(conn);
         return;
     }
-    static void load_data() throws NumberFormatException, IOException, SQLException {
+    static void load_data(Connection conn) throws NumberFormatException, IOException, SQLException {
         System.out.print("Type in the Source Data Folder Path: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String inputPath;
@@ -348,11 +353,11 @@ public class CSCI3170Proj{
         System.err.print("Processing...");
         // read files and load data from inputPath
         System.err.println("Done! Data is inputted to the database!");
-        main_menu();
+        main_menu(conn);
         return;
 
     }
-    static void show_content() throws NumberFormatException, IOException, SQLException {
+    static void show_content(Connection conn) throws NumberFormatException, IOException, SQLException {
         System.out.print("Which table would you like to show: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String inputTable = in.readLine();
@@ -374,13 +379,20 @@ public class CSCI3170Proj{
         if (inputTable.equals("transaction")){
             System.out.println("| t_id | p_id | s_id | t_date |");
         }
-        main_menu();
+        main_menu(conn);
         return;
     }
 
     public static void main(String[] args) throws NumberFormatException, IOException, SQLException{
-        System.out.println("Welcome to sales system!");
-        main_menu();
+        // connect to mySQL
+        try { 
+            Class.forName("com.mysql.cj.jdbc.Driver"); 
+        } catch(Exception x) { 
+            System.err.println("Unable to load the driver class!"); 
+        }
+        Connection conn = DriverManager.getConnection( "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db20?autoReconnect=true&useSSL=false", "Group20", "CSCI3170");
 
+        System.out.println("Welcome to sales system!");
+        main_menu(conn);
     }
 }
