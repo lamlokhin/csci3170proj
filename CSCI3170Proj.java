@@ -13,23 +13,174 @@ public class CSCI3170Proj{
                           "Enter Your Choice: "); 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input;
-        
+
         input = Integer.parseInt(in.readLine());
-        if (input == 1){
+        if (input == 1) {
             admin_menu();
         }
-        if (input == 2){
+        if (input == 2) {
             salesperson_menu();
         }
-        if (input == 3){
+        if (input == 3) {
             manager_menu();
         }
-        
+
         return;
     }
-    
-    private static void salesperson_menu(){
-        return; 
+
+    private static void salesperson_menu() throws NumberFormatException, IOException, SQLException {
+        System.out.print("\n-----Operations for salesperson menu-----\n" +
+                "What kinds of operation would you like to perform?\n" +
+                "1. Search for part\n" +
+                "2. Sell a part\n" +
+                "3. Return to the main menu\n" +
+                "Enter Your Choice: ");
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+        int input = Integer.parseInt(in.readLine());
+        if (input == 1) {
+            search_part();
+        }
+        if (input == 2) {
+            sell_part();
+        }
+        if (input == 3) {
+            main_menu();
+        }
+
+        return;
+    }
+
+    private static void search_part() throws NumberFormatException, IOException {
+        System.out.print("\nChoose the Search criterion:\n" +
+                "1. Part Name\n" +
+                "2. Manufacturer Name\n" +
+                "Choose the Search criterion: ");
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int criterion = Integer.parseInt(in.readLine());
+        System.out.print("\nType in the Search Keyword:");
+        String keyword = in.readLine();
+        System.out.print("\nChoose ordering:\n" +
+                "1. By price, ascending order\n" +
+                "2. By price, descending order\n" +
+                "Choose ordering: ");
+        int order = Integer.parseInt(in.readLine());
+        String query = "select Part.ID,Part.Name,Manufacturer.mName,Category.cName,Part.pAvailableQuantity,Part.pWarrantyPeriod,Part.pPrice";
+        query += "from Part,Manufacturer,Category ";
+        query += "where Part.cid = Category.cid and Part.mID = manufacturer.mID and";
+        if (criterion == 1) {
+            query += "Part.Name like ? ";
+        } else if (criterion == 2) {
+            query += "Manufacturer.mName like ? ";
+        }
+        if (order == 1) {
+            query += "order by price ASC;";
+        } else if (order == 2) {
+            query += "order by price DESC;";
+        }
+        // PreparedStatement preQuery=conn.prepareStatement(query);
+        // preQuery.setString(1, "'%" + keyword + "%'");
+        // System.out.println("contructed query is " + query);
+
+        // ResultSet result=preQuery.executeQuery()
+        // System.out.println("| ID | Name | Manufacturer | Category | Quantity |
+        // Warrantly | Price");
+        // while (result.next()) {
+        // System.println(String.format("| %s | %s | %s | %s | %s | %s | %s |",
+        // result.getString(1),
+        // result.getString(2), result.getString(3), result.getString(4),
+        // result.getString(5),
+        // result.getString(6), result.getString(7)));
+        // }
+        // System.out.println("End of Query");
+        // preQuery.close();
+        // result.close();
+    }
+
+    private static void sell_part() throws NumberFormatException, IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+        /* get part id with checking */
+        System.out.print("\nEnter The Part ID:\n");
+        int part_id = Integer.parseInt(in.readLine());
+        String quanCheckQuery = "Select pAvailableQuantity from Part where Part.pID = ?";
+        // PreparedStatement preQuanCheckQuery = conn.prepareStatement(quanCheckQuery);
+        // preQuanCheckQuery.setInt(1, part_id);
+        // ResultSet result1 = preQuanCheckQuery.executeQuery();
+        int availableQuantity = (int) Math.random();// result.getInt(1);
+        while (availableQuantity < 1) {
+            System.out.println(
+                    String.format("xxxErrorxxx:part with part id: %s available quantity less than 1,currently:%s\n",
+                            part_id, availableQuantity));
+            System.out.println("Enter The Part ID:");
+            part_id = Integer.parseInt(in.readLine());
+            // preQuanCheckQuery.setInt(1, part_id);
+            // result1 = preQuanCheckQuery.executeQuery();
+            // availableQuantity = result.getInt(1);
+        }
+
+        /* get salesperson id with checking */
+        System.out.print("\nEnter The Salesperson ID:\n");
+        int salesperson_id = Integer.parseInt(in.readLine());
+        String salesPersonCheckQuery = "Select count(*) from salseperson where sID=?";
+        // PreparedStatement
+        // preSalesPersonCheckQuery=conn.prepareStatement(salesPersonCheckQuery);
+        // preSalesPersonCheckQuery.setInt(1, salesperson_id);
+        // ResultSet result2 = preSalesPersonCheckQuery.executeQuery();
+        Boolean salesPersonExist = (int) Math.random() > 0;// result2.getInt(1);
+        while (!salesPersonExist) {
+            System.out.println(String.format("xxxErrorxxx:SalesPerson not exist with id:%s\n", salesperson_id));
+            System.out.println("please re-enter sales person id:");
+            salesperson_id = Integer.parseInt(in.readLine());
+            // preSalesPersonCheckQuery.setInt(1, salesperson_id);
+            // result2 = preSalesPersonCheckQuery.executeQuery();
+            // salesPersonExist = result2.getInt(1);
+        }
+
+        String getLastTIDQuery = "Select max(tID) from Transaction;";
+        // PreparedStatement preGetLastTIDQuery =conn.prepareStatement(getLastTIDQuery);
+        // ResultSet res3= preGetLastTIDQuery.executeQuery();
+        int lastTID = 0;// res3.getInt(1)==null?0:res3.getInt(1);
+
+        /* Inserting transaction */
+        String addTransactionQuery = "Insert into transaction (tID,pID,sID,tDate) values (?,?,?,?);";
+
+        // PreapredStatement
+        // preAddTransactionQuery=conn.prepareStatement(preAddTransactionQuery);
+        // preAddTransactionQuery.setInt(1,lastTID + 1);
+        // preAddTransactionQuery.setInt(2,part_id);
+        // preAddTransactionQuery.setint(3,salesperson_id);
+        // preAddTransacctionQuery.setDate(4,LocalDate.now().format(DateTimeFormatter.ofPattern("dd/mm/yyyy")));
+
+        /* Updating part available quantity */
+        String updatePartQuanQuery = "Update Part set pAvailableQuantity= ? where pID= ?;";
+        // PreparedStatement
+        // preUpdatePartQuanQuery=conn.prepareStatement(updatePartQuanQuery);
+        // preUpdatePartQuanQuery.setInt(1,availableQuantity-1);
+        // preUpdatePartQuanQuery.setInt(2,part_id);
+
+        /* get record after update quantity */
+        String getUpdatedPartRecordQuery = "Select pName,pAvailableQuantity from Part where pID= ?;";
+        // PreparedStatement
+        // preGetUpdatedPartRecordQuery=conn.prepareStatement(getUpdatedPartRecordQuery);
+        // preGetUpdatedPartRecordQuery.setInt(1,part_id);
+        // ResultSet res4= preGetUpdatedPartRecordQuery.executeQuery();
+        // System.out.println(String.format("Product: %s (id : %s) Remaining Quality:
+        // %s", res4.getString(1), part_id,
+        // res4.getString(22)));
+
+        // preQuanCheckQuery.close();
+        // preSalesPersonCheckQuery.close();
+        // preGetLastTIDQuery.close();
+        // preAddTransactionQuery.close();
+        // preUpdatePartQuanQuery.close();
+        // preGetUpdatedPartRecordQuert.close();
+        // result1.close();
+        // result2.close();
+        // result3.close();
+        // result4.close();
+        // return;
+
     }
 
     private static void manager_menu() throws NumberFormatException, IOException, SQLException {
@@ -43,21 +194,21 @@ public class CSCI3170Proj{
                            "Enter Your Choice: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input;
-        
+
         input = Integer.parseInt(in.readLine());
-        if (input == 1){
+        if (input == 1) {
             list_salespersons();
         }
-        if (input == 2){
+        if (input == 2) {
             count_sales();
         }
-        if (input == 3){
+        if (input == 3) {
             show_manufacturer();
         }
-        if (input == 4){
+        if (input == 4) {
             show_popular_parts();
         }
-        if (input == 5){
+        if (input == 5) {
             main_menu();
         }   
         return;
@@ -74,21 +225,21 @@ public class CSCI3170Proj{
                          "Enter Your Choice: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input;
-        
+
         input = Integer.parseInt(in.readLine());
-        if (input == 1){
-            create_database();                
+        if (input == 1) {
+            create_database();
         }
-        if (input == 2){
+        if (input == 2) {
             delete_database();
         }
-        if (input == 3){
+        if (input == 3) {
             load_data();
         }
-        if (input == 4){
+        if (input == 4) {
             show_content();
         }
-        if (input == 5){
+        if (input == 5) {
             main_menu();
         }
         return;
@@ -101,14 +252,14 @@ public class CSCI3170Proj{
                            "Choose the list ordering: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input_order;
-        
+
         input_order = Integer.parseInt(in.readLine());
         // retrieve list in requested order
         ResultSet result = null;
         if (input_order == 1){
             // retrieve in ascending
         }
-        if (input_order == 2){
+        if (input_order == 2) {
             // retrieve in descending
         }
         // print list
@@ -185,9 +336,6 @@ public class CSCI3170Proj{
         return;
     }
     static void delete_database() throws NumberFormatException, IOException, SQLException{
-        System.out.print("Processing...");
-        // initialize database
-        System.out.println("Done! Database is removed!");
         main_menu();
         return;
     }
@@ -195,14 +343,14 @@ public class CSCI3170Proj{
         System.out.print("Type in the Source Data Folder Path: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String inputPath;
-        
+
         inputPath = in.readLine();
         System.err.print("Processing...");
         // read files and load data from inputPath
         System.err.println("Done! Data is inputted to the database!");
         main_menu();
         return;
-        
+
     }
     static void show_content() throws NumberFormatException, IOException, SQLException {
         System.out.print("Which table would you like to show: ");
@@ -227,12 +375,12 @@ public class CSCI3170Proj{
             System.out.println("| t_id | p_id | s_id | t_date |");
         }
         main_menu();
-        return; 
+        return;
     }
 
     public static void main(String[] args) throws NumberFormatException, IOException, SQLException{
         System.out.println("Welcome to sales system!");
         main_menu();
-        
+
     }
 }
