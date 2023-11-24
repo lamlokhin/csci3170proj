@@ -163,6 +163,7 @@ public class CSCI3170Proj {
         preAddTransactionQuery.setInt(3, salesperson_id);
         java.sql.Date sqlDate = new java.sql.Date((new Date()).getTime());
         preAddTransactionQuery.setDate(4, sqlDate);
+        preAddTransactionQuery.executeUpdate();
 
         /* Updating part available quantity */
         String updatePartQuanQuery = "Update part set pAvailableQuantity= ? where pID= ?;";
