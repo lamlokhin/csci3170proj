@@ -2,7 +2,7 @@
 import java.io.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-public class SalesSystem{
+public class CSCI3170Proj{
     static void main_menu() throws NumberFormatException, IOException, SQLException{
         System.out.print("\n-----Main menu-----\n"+
                           "What kinds of operation would you like to perform?\n"+
@@ -59,8 +59,7 @@ public class SalesSystem{
         }
         if (input == 5){
             main_menu();
-        }
-            
+        }   
         return;
     }
 
@@ -92,7 +91,6 @@ public class SalesSystem{
         if (input == 5){
             main_menu();
         }
-        
         return;
     }
 
