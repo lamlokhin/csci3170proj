@@ -99,6 +99,7 @@ public class CSCI3170Proj {
         System.out.println("End of Query");
         preQuery.close();
         result.close();
+        main_menu(conn);
     }
 
     private static void sell_part(Connection conn) throws NumberFormatException, IOException, SQLException {
@@ -188,6 +189,7 @@ public class CSCI3170Proj {
         result2.close();
         result3.close();
         result4.close();
+        main_menu(conn);
         return;
     }
 
