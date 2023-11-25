@@ -346,8 +346,9 @@ public class CSCI3170Proj {
         System.out.print("Processing...");
         // initialize database
         Statement stmt = conn.createStatement();
-
-
+        // Delete Original Table
+        String drop = "DROP TABLE IF EXISTS CATEGORY, MANUFACTURER, PART,SALESPERSON, TRANSACTION;";
+        stmt.executeUpdate(drop);
         // Create Table
         String create_category_string = "CREATE TABLE CATEGORY(cID INT NOT NULL PRIMARY KEY, cName VARCHAR(255) NOT NULL);";
         String create_manufacturer_string = "CREATE TABLE MANUFACTURER(mID INT NOT NULL PRIMARY KEY, mName VARCHAR(255) NOT NULL, mAddress VARCHAR(255) NOT NULL, mPhoneNumber INT NOT NULL);";
