@@ -392,6 +392,7 @@ public class CSCI3170Proj {
         while ((categoryLine = categoryFileReader.readLine()) != null) {
             // Split the line by tab delimiter
             String[] data_category = categoryLine.split("\t");
+            System.out.println(data_category);
             // Extract the data values
             int cID = Integer.parseInt(data_category[0]);
             String cName = data_category[1];
