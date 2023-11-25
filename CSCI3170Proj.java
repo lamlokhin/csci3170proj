@@ -396,7 +396,7 @@ public class CSCI3170Proj {
             int cID = Integer.parseInt(data_category[0]);
             String cName = data_category[1];
             // Create the SQL INSERT statement
-            String insert_category = "INSERT INTO CATEGORY (cID, cName) VALUES (" + cID + "," + cName + ");";
+            String insert_category = "INSERT INTO CATEGORY (cID, cName) VALUES (1, 'CPU' );";
             // Execute the INSERT statement
             stmt.executeUpdate(insert_category);
         }
