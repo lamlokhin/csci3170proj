@@ -392,12 +392,11 @@ public class CSCI3170Proj {
         while ((categoryLine = categoryFileReader.readLine()) != null) {
             // Split the line by tab delimiter
             String[] data_category = categoryLine.split("\t");
-            System.out.println(data_category[0] + "|" + data_category[1]);
             // Extract the data values
             int cID = Integer.parseInt(data_category[0]);
             String cName = data_category[1];
             // Create the SQL INSERT statement
-            String insert_category = "INSERT INTO CATEGORY (cID, cName) VALUES (" + cID + "," + cName + ")";
+            String insert_category = "INSERT INTO CATEGORY (cID, cName) VALUES (" + cID + "," + cName + ");";
             // Execute the INSERT statement
             stmt.executeUpdate(insert_category);
         }
@@ -413,7 +412,7 @@ public class CSCI3170Proj {
             String mAddress = data_manufacturer[2];
             int mPhoneNumber = Integer.parseInt(data_manufacturer[3]);
             // Create the SQL INSERT statement
-            String insert_manufacturer = "INSERT INTO MANUFACTURER (mID, mName, mAddress, mPhoneNUmber) VALUES (" + mID + ", " + mName + ", " + mAddress + ", " + mPhoneNumber + ")";
+            String insert_manufacturer = "INSERT INTO MANUFACTURER (mID, mName, mAddress, mPhoneNUmber) VALUES (" + mID + ", " + mName + ", " + mAddress + ", " + mPhoneNumber + ");";
             // Execute the INSERT statement
             stmt.executeUpdate(insert_manufacturer);
         }
@@ -433,7 +432,7 @@ public class CSCI3170Proj {
             int pAvailableQuantity = Integer.parseInt(data_part[6]);
 
             // Create the SQL INSERT statement
-            String insert_part = "INSERT INTO PART (pID, pName, pPrice, mID, cID, pWarrantyPeriod, pAvailableQuatity) VALUES (" + pID + ", " + pName + ", " + pPrice + ", " + mID + ", " + cID + ", " + pWarrantyPeriod + ", " + pAvailableQuantity + ")";
+            String insert_part = "INSERT INTO PART (pID, pName, pPrice, mID, cID, pWarrantyPeriod, pAvailableQuatity) VALUES (" + pID + ", " + pName + ", " + pPrice + ", " + mID + ", " + cID + ", " + pWarrantyPeriod + ", " + pAvailableQuantity + ");";
             // Execute the INSERT statement
             stmt.executeUpdate(insert_part);
         }
@@ -450,7 +449,7 @@ public class CSCI3170Proj {
             int sPhoneNumber = Integer.parseInt(data_salesperson[3]);
             int sExperience = Integer.parseInt(data_salesperson[4]);
             // Create the SQL INSERT statement
-            String insert_salesperson = "INSERT INTO SALESPERSON (sID, sName, sAddress, sPhoneNUmber, sExperience) VALUES (" + sID + ", " + sName + ", " + sAddress + ", " + sPhoneNumber + ", " + sExperience + ")";
+            String insert_salesperson = "INSERT INTO SALESPERSON (sID, sName, sAddress, sPhoneNUmber, sExperience) VALUES (" + sID + ", " + sName + ", " + sAddress + ", " + sPhoneNumber + ", " + sExperience + ");";
             // Execute the INSERT statement
             stmt.executeUpdate(insert_salesperson);
         }
@@ -466,7 +465,7 @@ public class CSCI3170Proj {
             int sID = Integer.parseInt(data_transaction[2]);
             String tDate = data_transaction[3];
             // Create the SQL INSERT statement
-            String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + ", " + tDate + ")";
+            String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + ", " + tDate + ");";
             // Execute the INSERT statement
             stmt.executeUpdate(insert_transaction);
         }
