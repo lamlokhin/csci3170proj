@@ -349,16 +349,14 @@ public class CSCI3170Proj {
 
 
         // Create Table
-        String create = "CREATE TABLE CATEGORY(cID INT NOT NULL PRIMARY KEY, cName VARCHAR(255) NOT NULL);"; 
-                       /*  "CREATE TABLE MANUFACTURER(mID INT NOT NULL PRIMARY KEY, mName VARCHAR(255) NOT NULL, mAddress VARCHAR(255) NOT NULL, mPhoneNumber INT NOT NULL);" +
-                        "CREATE TABLE PART(pID INT NOT NULL PRIMARY KEY, pName VARCHAR(255) NOT NULL, pPrice INT NOT NULL, mID INT NOT NULL, cID INT NOT NULL, pWarrantyPeriod INT NOT NULL, pAvailableQuantity INT NOT NULL);" +
-                        "CREATE TABLE SALESPERSON(sID INT NOT NULL PRIMARY KEY, sName VARCHAR(255) NOT NULL, sAddress VARCHAR(255) NOT NULL, sPhoneNumber INT NOT NULL, sExperience INT NOT NULL);" +
+        String create = "CREATE TABLE CATEGORY(cID INT NOT NULL PRIMARY KEY, cName VARCHAR(255) NOT NULL);\n" + 
+                        "CREATE TABLE MANUFACTURER(mID INT NOT NULL PRIMARY KEY, mName VARCHAR(255) NOT NULL, mAddress VARCHAR(255) NOT NULL, mPhoneNumber INT NOT NULL);\n" +
+                        "CREATE TABLE PART(pID INT NOT NULL PRIMARY KEY, pName VARCHAR(255) NOT NULL, pPrice INT NOT NULL, mID INT NOT NULL, cID INT NOT NULL, pWarrantyPeriod INT NOT NULL, pAvailableQuantity INT NOT NULL\n);" +
+                        "CREATE TABLE SALESPERSON(sID INT NOT NULL PRIMARY KEY, sName VARCHAR(255) NOT NULL, sAddress VARCHAR(255) NOT NULL, sPhoneNumber INT NOT NULL, sExperience INT NOT NULL);\n" +
                         "CREATE TABLE TRANSACTION(tID INT NOT NULL PRIMARY KEY, pID INT NOT NULL, sID INT NOT NULL, tDate DATE NOT NULL);";
-        */
         stmt.executeUpdate(create);
         stmt.close();
         
-
         System.out.println("Done! Database is initialized!");
         main_menu(conn);
         return;
@@ -368,7 +366,7 @@ public class CSCI3170Proj {
         System.out.print("Processing...");
         // initialize database
         Statement stmt = conn.createStatement();
-        String drop = "DROP TABLE CATEGORY, MANUFACTURER, PART, SALESPERSON, TRANSACTION;";
+        String drop = "DROP TABLE CATEGORY;\n DROP TABLE MANUFACTURER;\n DROP TABLE PART;\n DROP TABLE SALESPERSON;\n DROP TABLE TRANSACTION;";
         stmt.executeUpdate(drop);
         stmt.close();
         System.out.println("Done! Database is removed!");
