@@ -370,7 +370,7 @@ public class CSCI3170Proj {
         System.out.print("Processing...");
         // initialize database
         Statement stmt = conn.createStatement();
-        String drop = "DROP TABLE CATEGORY, MANUFACTURER, PART,SALESPERSON, TRANSACTION;";
+        String drop = "DROP TABLE IF EXISTS CATEGORY, MANUFACTURER, PART,SALESPERSON, TRANSACTION;";
         stmt.executeUpdate(drop);
         stmt.close();
         System.out.println("Done! Database is removed!");
