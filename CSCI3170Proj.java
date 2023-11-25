@@ -465,7 +465,7 @@ public class CSCI3170Proj {
             int sID = Integer.parseInt(data_transaction[2]);
             String tDate = data_transaction[3];
             // Create the SQL INSERT statement
-            String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + ",'" + tDate + "');";
+            String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + "," + tDate + ");";
             // Execute the INSERT statement
             stmt.executeUpdate(insert_transaction);
         }
