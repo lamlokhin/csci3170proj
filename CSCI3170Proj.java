@@ -477,7 +477,7 @@ public class CSCI3170Proj {
             }
             String tDate = dt1.format(tDate_temp);
             // Create the SQL INSERT statement
-            String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + "," + tDate + ");";
+            String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + ",'" + tDate + "');";
             // Execute the INSERT statement
             stmt.executeUpdate(insert_transaction);
         }
