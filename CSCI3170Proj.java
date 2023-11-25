@@ -532,7 +532,7 @@ public class CSCI3170Proj {
             rs = stmt.executeQuery("SELECT * FROM PART");
             while (rs.next()) {
                 int pID = rs.getInt("pID");
-                String pName = rs.getString("mName");
+                String pName = rs.getString("pName");
                 int pPrice = rs.getInt("pPrice");
                 int mID = rs.getInt("mID");
                 int cID = rs.getInt("cID");
