@@ -432,7 +432,7 @@ public class CSCI3170Proj {
             int pAvailableQuantity = Integer.parseInt(data_part[6]);
 
             // Create the SQL INSERT statement
-            String insert_part = "INSERT INTO PART (pID, pName, pPrice, mID, cID, pWarrantyPeriod, pAvailableQuatity) VALUES (" + pID + ",'" + pName + "'," + pPrice + "," + mID + "," + cID + "," + pWarrantyPeriod + "," + pAvailableQuantity + ");";
+            String insert_part = "INSERT INTO PART (pID, pName, pPrice, mID, cID, pWarrantyPeriod, pAvailableQuantity) VALUES (" + pID + ",'" + pName + "'," + pPrice + "," + mID + "," + cID + "," + pWarrantyPeriod + "," + pAvailableQuantity + ");";
             // Execute the INSERT statement
             stmt.executeUpdate(insert_part);
         }
