@@ -347,9 +347,6 @@ public class CSCI3170Proj {
         // initialize database
         Statement stmt = conn.createStatement();
 
-        // Drop Table
-        String drop = "DROP TABLE CATEGORY; DROP TABLE MANUFACTURER; DROP TABLE PART; DROP TABLE SALESPERSON; DROP TABLE TRANSACTION;";
-        stmt.executeUpdate(drop);
         // Create Table
         String create = "CREATE TABLE CATEGORY(cID INTEGER NOT NULL PRIMARY KEY, cName VARCHAR(255) NOT NULL)" + 
                         "CREATE TABLE MANUFACTURER(mID INTEGER NOT NULL PRIMARY KEY, mName VARCHAR(255) NOT NULL, mAddress VARCHAR(255) NOT NULL, mPhoneNumber INTEGER NOT NULL;" +
