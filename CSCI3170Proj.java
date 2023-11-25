@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.sql.PreparedStatement;
 import java.util.Date;
 
@@ -457,13 +459,23 @@ public class CSCI3170Proj {
         // Read "transaction.txt"
         BufferedReader transactionFileReader = new BufferedReader(new FileReader(inputPath + "/transaction.txt"));
         String transactionLine;
+        SimpleDateFormat dt = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
         while ((transactionLine = transactionFileReader.readLine()) != null) {
             String[] data_transaction = transactionLine.split("\t");
             // Extract the data values
             int tID = Integer.parseInt(data_transaction[0]);
             int pID = Integer.parseInt(data_transaction[1]);
             int sID = Integer.parseInt(data_transaction[2]);
-            String tDate = data_transaction[3];
+            Date tDate_temp;
+            try {
+                tDate_temp = dt.parse(data_transaction[3]);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                System.err.println("Date format ERROR");
+                return;
+            }
+            String tDate = dt1.format(tDate_temp);
             // Create the SQL INSERT statement
             String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + "," + tDate + ");";
             // Execute the INSERT statement
