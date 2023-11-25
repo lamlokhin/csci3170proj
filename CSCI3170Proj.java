@@ -496,11 +496,7 @@ public class CSCI3170Proj {
             System.out.println("| cID | cNAme |");
             // Show content of Category
             rs = stmt.executeQuery("SELECT * FROM CATEGORY");
-            while (rs.next()) {
-            int cID = rs.getInt("cID");
-            String cName = rs.getString("cName");
-            System.out.println("| " + cID + " | " + cName + " |");
-            }
+            System.out.println(rs);
         }
         if (inputTable.equals("manufacturer")) {
             System.out.println("| mID | mName | mAddress | mPhoneNumber |");
