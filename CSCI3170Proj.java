@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.Date;
 
@@ -344,6 +345,20 @@ public class CSCI3170Proj {
     static void create_database(Connection conn) throws NumberFormatException, IOException, SQLException {
         System.out.print("Processing...");
         // initialize database
+        Statement stmt = conn.createStatement();
+
+        // Drop Table
+        String drop = "DROP TABLE CATEGORY; DROP TABLE MANUFACTURER; DROP TABLE PART; DROP TABLE SALESPERSON; DROP TABLE TRANSACTION;";
+        stmt.executeUpdate(drop);
+        // Create Table
+        String create = "CREATE TABLE CATEGORY(cID INTEGER NOT NULL PRIMARY KEY, cName VARCHAR(255) NOT NULL)" + 
+                        "CREATE TABLE MANUFACTURER(mID INTEGER NOT NULL PRIMARY KEY, mName VARCHAR(255) NOT NULL, mAddress VARCHAR(255) NOT NULL, mPhoneNumber INTEGER NOT NULL;"+
+                        "CREATE TABLE PART(pID INTEGER NOT NULL PRIMARY KEY, pName VARCHAR(255) NOT NULL, pPrice INTEGER NOT NULL, mID INTEGER NOT NULL, cID INTEGER NOT NULL, pWarrantyPeriod INTEGER NOT NULL, pAvailableQuantity INTEGER NOT NULL);"+
+                        "CREATE TABLE SALESPERSON(sID INTEGER NOT NULL PRIMARY KEY, sName VARCHAR(255) NOT NULL, sAddress VARCHAR(255) NOT NULL, sPhoneNumber INTEGER NOT NULL, sExperience INTEGER NOT NULL);"+
+                        "CREATE TABLE TRANSACTION(tID INTEGER NOT NULL PRIMARY KEY, pID INTEGER NOT NULL, sID INTEGER NOT NULL, tDate DATE NOT NULL);";
+        stmt.executeUpdate(create);
+        stmt.close();
+
         System.out.println("Done! Database is initialized!");
         main_menu(conn);
         return;
@@ -352,6 +367,10 @@ public class CSCI3170Proj {
     static void delete_database(Connection conn) throws NumberFormatException, IOException, SQLException {
         System.out.print("Processing...");
         // initialize database
+        Statement stmt = conn.createStatement();
+        String drop = "DROP TABLE CATEGORY; DROP TABLE MANUFACTURER; DROP TABLE PART; DROP TABLE SALESPERSON; DROP TABLE TRANSACTION;";
+        stmt.executeUpdate(drop);
+        stmt.close();
         System.out.println("Done! Database is removed!");
         main_menu(conn);
         return;
@@ -361,9 +380,99 @@ public class CSCI3170Proj {
         System.out.print("Type in the Source Data Folder Path: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String inputPath;
-
+        Statement stmt = conn.createStatement();
         inputPath = in.readLine();
         System.err.print("Processing...");
+        // Read "category.txt"
+        BufferedReader categoryFileReader = new BufferedReader(new FileReader(inputPath + "/category.txt"));
+        String categoryLine;
+        while ((categoryLine = categoryFileReader.readLine()) != null) {
+            // Split the line by tab delimiter
+            String[] data_category = categoryLine.split("\t");
+            // Extract the data values
+            int cID = Integer.parseInt(data_category[0]);
+            String cName = data_category[1];
+            // Create the SQL INSERT statement
+            String insert_category = "INSERT INTO CATEGORY (cID, cName) VALUES (" + cID + ", " + cName + ")";
+            // Execute the INSERT statement
+            stmt.executeUpdate(insert_category);
+        }
+
+        // Read "manufacturer.txt"
+        BufferedReader manufacturerFileReader = new BufferedReader(new FileReader(inputPath + "/manufacturer.txt"));
+        String manufacturerLine;
+        while ((manufacturerLine = manufacturerFileReader.readLine()) != null) {
+            String[] data_manufacturer= manufacturerLine.split("\t");
+            // Extract the data values
+            int mID = Integer.parseInt(data_manufacturer[0]);
+            String mName = data_manufacturer[1];
+            String mAddress = data_manufacturer[2];
+            int mPhoneNumber = Integer.parseInt(data_manufacturer[3]);
+            // Create the SQL INSERT statement
+            String insert_manufacturer = "INSERT INTO MANUFACTURER (mID, mName, mAddress, mPhoneNUmber) VALUES (" + mID + ", " + mName + ", " + mAddress + ", " + mPhoneNumber + ")";
+            // Execute the INSERT statement
+            stmt.executeUpdate(insert_manufacturer);
+        }
+
+        // Read "part.txt"
+        BufferedReader partFileReader = new BufferedReader(new FileReader(inputPath + "/part.txt"));
+        String partLine;
+        while ((partLine = partFileReader.readLine()) != null) {
+            String[] data_part = partLine.split("\t");
+            // Extract the data values
+            int pID = Integer.parseInt(data_part[0]);
+            String pName = data_part[1];
+            int pPrice = Integer.parseInt(data_part[2]);
+            int mID = Integer.parseInt(data_part[3]);
+            int cID = Integer.parseInt(data_part[4]);
+            int pWarrantyPeriod = Integer.parseInt(data_part[5]);
+            int pAvailableQuantity = Integer.parseInt(data_part[6]);
+
+            // Create the SQL INSERT statement
+            String insert_part = "INSERT INTO PART (pID, pName, pPrice, mID, cID, pWarrantyPeriod, pAvailableQuatity) VALUES (" + pID + ", " + pName + ", " + pPrice + ", " + mID + ", " + cID + ", " + pWarrantyPeriod + ", " + pAvailableQuantity + ")";
+            // Execute the INSERT statement
+            stmt.executeUpdate(insert_part);
+        }
+
+        // Read "salesperson.txt"
+        BufferedReader salespersonFileReader = new BufferedReader(new FileReader(inputPath + "/salesperson.txt"));
+        String salespersonLine;
+        while ((salespersonLine = salespersonFileReader.readLine()) != null) {
+            String[] data_salesperson = salespersonLine.split("\t");
+            // Extract the data values
+            int sID = Integer.parseInt(data_salesperson[0]);
+            String sName = data_salesperson[1];
+            String sAddress = data_salesperson[2];
+            int sPhoneNumber = Integer.parseInt(data_salesperson[3]);
+            int sExperience = Integer.parseInt(data_salesperson[4]);
+            // Create the SQL INSERT statement
+            String insert_salesperson = "INSERT INTO SALESPERSON (sID, sName, sAddress, sPhoneNUmber, sExperience) VALUES (" + sID + ", " + sName + ", " + sAddress + ", " + sPhoneNumber + ", " + sExperience + ")";
+            // Execute the INSERT statement
+            stmt.executeUpdate(insert_salesperson);
+        }
+
+        // Read "transaction.txt"
+        BufferedReader transactionFileReader = new BufferedReader(new FileReader(inputPath + "/transaction.txt"));
+        String transactionLine;
+        while ((transactionLine = transactionFileReader.readLine()) != null) {
+            String[] data_transaction = transactionLine.split("\t");
+            // Extract the data values
+            int tID = Integer.parseInt(data_transaction[0]);
+            int pID = Integer.parseInt(data_transaction[1]);
+            int sID = Integer.parseInt(data_transaction[2]);
+            String tDate = data_transaction[3];
+            // Create the SQL INSERT statement
+            String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + ", " + tDate + ")";
+            // Execute the INSERT statement
+            stmt.executeUpdate(insert_transaction);
+        }
+        
+        categoryFileReader.close();
+        manufacturerFileReader.close();
+        partFileReader.close();
+        salespersonFileReader.close();
+        transactionFileReader.close();
+        stmt.close();
         // read files and load data from inputPath
         System.err.println("Done! Data is inputted to the database!");
         main_menu(conn);
@@ -379,19 +488,24 @@ public class CSCI3170Proj {
         // Retrieve table from database
         // For each tuple; each field, print line
         if (inputTable.equals("category")) {
-            System.out.println("| c_id | c_name |");
+            System.out.println("| cID | cNAme |");
+
         }
         if (inputTable.equals("manufacturer")) {
-            System.out.println("| m_id | m_name | m_address | m_phone_number |");
+            System.out.println("| mID | mName | mAddress | mPhoneNumber |");
+
         }
         if (inputTable.equals("part")) {
-            System.out.println("| p_id | p_name | p_price | m_id | c_id | p_warranty | p_quantity |");
+            System.out.println("| pID | pName | pPrice | mID | cID | pWarrantyPeriod | pAvailableQuantity |");
+
         }
         if (inputTable.equals("salesperson")) {
-            System.out.println("| s_id | s_name | s_address | s_phone_number | s_experience |");
+            System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
+
         }
         if (inputTable.equals("transaction")) {
-            System.out.println("| t_id | p_id | s_id | t_date |");
+            System.out.println("| tID | pID | sID | tDate |");
+            
         }
         main_menu(conn);
         return;
