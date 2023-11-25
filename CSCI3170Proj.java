@@ -390,6 +390,7 @@ public class CSCI3170Proj {
         BufferedReader categoryFileReader = new BufferedReader(new FileReader(inputPath + "/category.txt"));
         String categoryLine;
         while ((categoryLine = categoryFileReader.readLine()) != null) {
+            System.out.println(categoryLine);
             // Split the line by tab delimiter
             String[] data_category = categoryLine.split("\t");
             System.out.println(data_category);
