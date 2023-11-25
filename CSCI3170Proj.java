@@ -352,9 +352,9 @@ public class CSCI3170Proj {
         stmt.executeUpdate(drop);
         // Create Table
         String create = "CREATE TABLE CATEGORY(cID INTEGER NOT NULL PRIMARY KEY, cName VARCHAR(255) NOT NULL)" + 
-                        "CREATE TABLE MANUFACTURER(mID INTEGER NOT NULL PRIMARY KEY, mName VARCHAR(255) NOT NULL, mAddress VARCHAR(255) NOT NULL, mPhoneNumber INTEGER NOT NULL;"+
-                        "CREATE TABLE PART(pID INTEGER NOT NULL PRIMARY KEY, pName VARCHAR(255) NOT NULL, pPrice INTEGER NOT NULL, mID INTEGER NOT NULL, cID INTEGER NOT NULL, pWarrantyPeriod INTEGER NOT NULL, pAvailableQuantity INTEGER NOT NULL);"+
-                        "CREATE TABLE SALESPERSON(sID INTEGER NOT NULL PRIMARY KEY, sName VARCHAR(255) NOT NULL, sAddress VARCHAR(255) NOT NULL, sPhoneNumber INTEGER NOT NULL, sExperience INTEGER NOT NULL);"+
+                        "CREATE TABLE MANUFACTURER(mID INTEGER NOT NULL PRIMARY KEY, mName VARCHAR(255) NOT NULL, mAddress VARCHAR(255) NOT NULL, mPhoneNumber INTEGER NOT NULL;" +
+                        "CREATE TABLE PART(pID INTEGER NOT NULL PRIMARY KEY, pName VARCHAR(255) NOT NULL, pPrice INTEGER NOT NULL, mID INTEGER NOT NULL, cID INTEGER NOT NULL, pWarrantyPeriod INTEGER NOT NULL, pAvailableQuantity INTEGER NOT NULL);" +
+                        "CREATE TABLE SALESPERSON(sID INTEGER NOT NULL PRIMARY KEY, sName VARCHAR(255) NOT NULL, sAddress VARCHAR(255) NOT NULL, sPhoneNumber INTEGER NOT NULL, sExperience INTEGER NOT NULL);" +
                         "CREATE TABLE TRANSACTION(tID INTEGER NOT NULL PRIMARY KEY, pID INTEGER NOT NULL, sID INTEGER NOT NULL, tDate DATE NOT NULL);";
         stmt.executeUpdate(create);
         stmt.close();
@@ -487,26 +487,72 @@ public class CSCI3170Proj {
         System.err.println("Content of the table " + inputTable + ": ");
         // Retrieve table from database
         // For each tuple; each field, print line
+        Statement stmt = conn.createStatement();
+        ResultSet rs = null;
         if (inputTable.equals("category")) {
             System.out.println("| cID | cNAme |");
-
+            // Show content of Category
+            rs = stmt.executeQuery("SELECT * FROM CATEGORY");
+            while (rs.next()) {
+            int cID = rs.getInt("cID");
+            String cName = rs.getString("cName");
+            System.out.println("| " + cID + " | " + cName + " |");
+            }
         }
         if (inputTable.equals("manufacturer")) {
             System.out.println("| mID | mName | mAddress | mPhoneNumber |");
-
+             // Show content of Manufacturer
+            rs = stmt.executeQuery("SELECT * FROM MANUFACTURER");
+            while (rs.next()) {
+                int mID = rs.getInt("mID");
+                String mName = rs.getString("mName");
+                String mAddress = rs.getString("mAddress");
+                int mPhoneNumber = rs.getInt("mPhoneNumber");
+                System.out.println("| " + mID + " | " + mName + " | " + mAddress + " | " + mPhoneNumber + " |");
+            }
         }
         if (inputTable.equals("part")) {
             System.out.println("| pID | pName | pPrice | mID | cID | pWarrantyPeriod | pAvailableQuantity |");
-
+             // Show content of Part
+            rs = stmt.executeQuery("SELECT * FROM PART");
+            while (rs.next()) {
+                int pID = rs.getInt("pID");
+                String pName = rs.getString("mName");
+                int pPrice = rs.getInt("pPrice");
+                int mID = rs.getInt("mID");
+                int cID = rs.getInt("cID");
+                int pWarrantyPeriod = rs.getInt("pWarrantyPeriod");
+                int pAvailableQuantity = rs.getInt("pAvailableQuantity");
+                System.out.println("| " + pID + " | " + pName + " | " + pPrice + " | " + mID + " | " + cID + " | " + pWarrantyPeriod + " | " + pAvailableQuantity + " |");
+            }
         }
         if (inputTable.equals("salesperson")) {
             System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
-
+             // Show content of Salesperson
+            rs = stmt.executeQuery("SELECT * FROM SALESPERSON");
+            while (rs.next()) {
+                int sID = rs.getInt("sID");
+                String sName = rs.getString("sName");
+                String sAddress = rs.getString("sAddress");
+                int sPhoneNumber = rs.getInt("sPhoneNumber");
+                int sExperience = rs.getInt("sExperience");
+                System.out.println("| " + sID + " | " + sName + " | " + sAddress + " | " + sPhoneNumber + " | " + sExperience + " |");
+            }
         }
         if (inputTable.equals("transaction")) {
             System.out.println("| tID | pID | sID | tDate |");
-            
+             // Show content of Transaction
+            rs = stmt.executeQuery("SELECT * FROM TRANSACTION");
+            while (rs.next()) {
+                int tID = rs.getInt("tID");
+                int pID = rs.getInt("pID");
+                int sID = rs.getInt("sID");
+                String tDate = rs.getString("tDate");
+                System.out.println("| " + tID + " | " + pID + " | " + sID + " | " + tDate + " |");
+            }
         }
+        rs.close();
+        stmt.close();
         main_menu(conn);
         return;
     }
