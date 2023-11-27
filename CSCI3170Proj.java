@@ -340,7 +340,7 @@ public class CSCI3170Proj {
         // retrieve the N most popular parts
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
-        rs = stmt.executeQuery("SELECT p.pID, p.pName, total_no_trans FROM( SELECT p.pID, p.pName, COUNT(t.tID) AS total_no_trans, ROWNUM AS RowNumber FROM PART p JOIN TRANSACTION t ON p.pID = t.pID GROUP BY p.pID, p.pName ORDER BY total_no_trans DESC) AS subquery WHERE RowNumber <= " + input + ";");
+        rs = stmt.executeQuery("SELECT p.pID, p.pName, total_no_trans FROM( SELECT p.pID, p.pName, COUNT(t.tID) AS total_no_trans, ROW_NUMBER() OVER (ORDER BY COUNT(t.Transaction_ID) DESC) AS RowNumber FROM PART p JOIN TRANSACTION t ON p.pID = t.pID GROUP BY p.pID, p.pName ORDER BY total_no_trans DESC) AS subquery WHERE RowNumber <= " + input + ";");
         // print the parts
         System.out.println("| Part ID | Part Name | No. of Transaction |");
         while (rs.next()) {
