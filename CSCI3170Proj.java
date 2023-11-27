@@ -22,19 +22,26 @@ public class CSCI3170Proj {
                 "Enter Your Choice: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input;
-
-        input = Integer.parseInt(in.readLine());
-        if (input == 1) {
-            admin_menu(conn);
-        }
-        if (input == 2) {
-            salesperson_menu(conn);
-        }
-        if (input == 3) {
-            manager_menu(conn);
-        }
-        if (input == 4){
-            System.exit(0);
+        try{
+            input = Integer.parseInt(in.readLine());
+                if (input == 1) {
+                admin_menu(conn);
+            }
+            if (input == 2) {
+                salesperson_menu(conn);
+            }
+            if (input == 3) {
+                manager_menu(conn);
+            }
+            if (input == 4){
+                System.exit(0);
+                System.out.println("Program terminated.");
+            } else{
+                System.out.println("Invalid input. Please enter a valid choice (1-4).");
+            }
+        } catch(NumberFormatException e){
+            System.out.println("Invalid input. Please enter a valid integer choice (1-4).");
+            main_menu(conn);
         }
 
         return;
@@ -48,17 +55,24 @@ public class CSCI3170Proj {
                 "3. Return to the main menu\n" +
                 "Enter Your Choice: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-        int input = Integer.parseInt(in.readLine());
-        if (input == 1) {
-            search_part(conn);
+        try{
+            int input = Integer.parseInt(in.readLine());
+            if (input == 1) {
+                search_part(conn);
+            }
+            if (input == 2) {
+                sell_part(conn);
+            }
+            if (input == 3) {
+                main_menu(conn);
+            } else{
+                System.out.println("Invalid input. Please enter a valid choice (1-3).");
+            }
+        }catch(NumberFormatException e){
+            System.out.println("Invalid input. Please enter a valid integer choice (1-3).");
+            salesperson_menu(conn);
         }
-        if (input == 2) {
-            sell_part(conn);
-        }
-        if (input == 3) {
-            main_menu(conn);
-        }
+        
 
         return;
     }
@@ -210,22 +224,28 @@ public class CSCI3170Proj {
                 "Enter Your Choice: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input;
-
-        input = Integer.parseInt(in.readLine());
-        if (input == 1) {
-            list_salespersons(conn);
-        }
-        if (input == 2) {
-            count_sales(conn);
-        }
-        if (input == 3) {
-            show_manufacturer(conn);
-        }
-        if (input == 4) {
-            show_popular_parts(conn);
-        }
-        if (input == 5) {
-            main_menu(conn);
+        try{
+            input = Integer.parseInt(in.readLine());
+            if (input == 1) {
+                list_salespersons(conn);
+            }
+            if (input == 2) {
+                count_sales(conn);
+            }
+            if (input == 3) {
+                show_manufacturer(conn);
+            }  
+            if (input == 4) {
+                show_popular_parts(conn);
+            }
+            if (input == 5) {
+                main_menu(conn);
+            }else {
+                System.out.println("Invalid input. Please enter a valid choice (1-5).");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid integer choice (1-5).");
+            manager_menu(conn);
         }
         return;
     }
@@ -241,22 +261,27 @@ public class CSCI3170Proj {
                 "Enter Your Choice: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input;
-
-        input = Integer.parseInt(in.readLine());
-        if (input == 1) {
-            create_database(conn);
-        }
-        if (input == 2) {
-            delete_database(conn);
-        }
-        if (input == 3) {
-            load_data(conn);
-        }
-        if (input == 4) {
-            show_content(conn);
-        }
-        if (input == 5) {
-            main_menu(conn);
+        try{
+            input = Integer.parseInt(in.readLine());
+            if (input == 1) {
+                create_database(conn);
+            }
+            if (input == 2) {
+                delete_database(conn);
+            }
+            if (input == 3) {
+                load_data(conn);
+            }
+            if (input == 4) {
+                show_content(conn);
+            }
+            if (input == 5) {
+                main_menu(conn);
+            } else {
+                System.out.println("Invalid input. Please enter a valid choice (1-5).");
+            }
+        } catch(NumberFormatException e){
+            System.out.println("Invalid input. Please enter a valid integer choice (1-5).");
         }
         return;
     }
@@ -268,29 +293,37 @@ public class CSCI3170Proj {
                 "Choose the list ordering: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input_order;
-        input_order = Integer.parseInt(in.readLine());
-        // retrieve list in requested order
-        Statement stmt = conn.createStatement();
-        ResultSet rs = null;
-        if (input_order == 1) {
-            // retrieve in ascending
-            rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience ASC;");
-        }
-        if (input_order == 2) {
-            // retrieve in descending
-             rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience DESC;");
-        }
-        // print list
-        System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
-        while (rs.next()) {
-            System.out.printf("| %d | %s | %d | %d |\n",
+        try{
+            input_order = Integer.parseInt(in.readLine());
+            // retrieve list in requested order
+            Statement stmt = conn.createStatement();
+            ResultSet rs = null;
+            if (input_order == 1) {
+                // retrieve in ascending
+                rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience ASC;");
+            }
+            if (input_order == 2) {
+                // retrieve in descending
+                rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience DESC;");
+            } else{
+                System.out.println("Invalid input. Please enter a valid choice (1 or 2).");
+                list_salespersons(conn);
+            }
+            // print list
+            System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
+            while (rs.next()) {
+                System.out.printf("| %d | %s | %d | %d |\n",
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getInt(3),
                     rs.getInt(4));
+            }
+            System.out.println("End of Query");
+            main_menu(conn);
+        } catch(NumberFormatException e){
+
         }
-        System.out.println("End of Query");
-        main_menu(conn);
+        
         return;
 
     }
