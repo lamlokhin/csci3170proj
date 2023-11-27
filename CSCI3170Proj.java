@@ -391,7 +391,7 @@ public class CSCI3170Proj {
         return;
     }
 
-    static void load_data(Connection conn) throws NumberFormatException, IOException, SQLException {
+    static void load_data(Connection conn) throws NumberFormatException, SQLException, IOException {
         System.out.print("Type in the Source Data Folder Path: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String inputPath;
@@ -399,20 +399,35 @@ public class CSCI3170Proj {
         inputPath = in.readLine();
         System.err.print("Processing...");
         // Read "category.txt"
-        BufferedReader categoryFileReader = new BufferedReader(new FileReader(inputPath + "/category.txt"));
-        String categoryLine;
-        while ((categoryLine = categoryFileReader.readLine()) != null) {
-            // Split the line by tab delimiter
-            String[] data_category = categoryLine.split("\t");
-            // Extract the data values
-            int cID = Integer.parseInt(data_category[0]);
-            String cName = data_category[1];
-            // Create the SQL INSERT statement
-            String insert_category = "INSERT INTO CATEGORY (cID, cName) VALUES (" + cID + ",'" + cName + "');";
-            // Execute the INSERT statement
-            stmt.executeUpdate(insert_category);
+        BufferedReader categoryFileReader;
+        try {
+            categoryFileReader = new BufferedReader(new FileReader(inputPath + "/category.txt"));
+            String categoryLine;
+            try {
+                while ((categoryLine = categoryFileReader.readLine()) != null) {
+                    // Split the line by tab delimiter
+                    String[] data_category = categoryLine.split("\t");
+                    // Extract the data values
+                    int cID = Integer.parseInt(data_category[0]);
+                    String cName = data_category[1];
+                    // Create the SQL INSERT statement
+                    String insert_category = "INSERT INTO CATEGORY (cID, cName) VALUES (" + cID + ",'" + cName + "');";
+                    // Execute the INSERT statement
+                    stmt.executeUpdate(insert_category);
+            }
+        } 
+        catch (SQLException e){
+            System.err.println("Error: category already exists");
+            main_menu(conn);
         }
         categoryFileReader.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            System.err.println("Error: file not found");
+            main_menu(conn);
+        }
+        
+        
 
         // Read "manufacturer.txt"
         BufferedReader manufacturerFileReader = new BufferedReader(new FileReader(inputPath + "/manufacturer.txt"));
