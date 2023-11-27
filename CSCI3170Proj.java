@@ -307,7 +307,7 @@ public class CSCI3170Proj {
         System.out.println("Transaction Record:\n" +
                 "| ID | Name | Years of Experience | Number of Transaction |");
         while (rs.next()) {
-            System.out.printf(" | %d | %s | %d | %d |",
+            System.out.printf(" | %d | %s | %d | %d |\n",
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getInt(3),
