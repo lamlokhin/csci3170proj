@@ -573,16 +573,15 @@ public class CSCI3170Proj {
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         try{
-            try{
-                if (inputTable.equals("category")) {
-                System.out.println("| cID | cNAme |");
-                // Show content of Category
-                rs = stmt.executeQuery("SELECT * FROM CATEGORY");
-                while (rs.next()) {
-                    System.out.printf("| %d | %s |\n",
-                    rs.getInt(1),
-                    rs.getString(2));
-                }
+            if (inputTable.equals("category")) {
+            System.out.println("| cID | cNAme |");
+            // Show content of Category
+            rs = stmt.executeQuery("SELECT * FROM CATEGORY");
+            while (rs.next()) {
+                System.out.printf("| %d | %s |\n",
+                rs.getInt(1),
+                rs.getString(2));
+            }
             }
             if (inputTable.equals("manufacturer")) {
                 System.out.println("| mID | mName | mAddress | mPhoneNumber |");
@@ -613,7 +612,7 @@ public class CSCI3170Proj {
             }
             if (inputTable.equals("salesperson")) {
                 System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
-                 // Show content of Salesperson
+                // Show content of Salesperson
                 rs = stmt.executeQuery("SELECT * FROM SALESPERSON");
                 while (rs.next()) {
                     System.out.printf("| %d | %s | %s | %d | %d |\n",
@@ -635,20 +634,19 @@ public class CSCI3170Proj {
                     rs.getInt(3),
                     rs.getString(4));
                 }
+            } else{
+                System.out.println("Invalid table name!");
+                main_menu(conn);
             }
         } catch(SQLException e){
-            System.out.println("Table not found!");
+            System.out.println("Database has not been initized!");
             main_menu(conn);
         }
-    } catch(NullPointerException e){
-            System.err.println("Error: file not found");
-            main_menu(conn);
-    }
         
-    rs.close();
-    stmt.close();
-    main_menu(conn);
-    return;
+        rs.close();
+        stmt.close();
+        main_menu(conn);
+        return;
     }
 
     public static void main(String[] args) throws NumberFormatException, IOException, SQLException {
