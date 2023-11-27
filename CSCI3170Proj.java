@@ -345,11 +345,20 @@ public class CSCI3170Proj {
     }
 
     static void count_sales(Connection conn) throws NumberFormatException, IOException, SQLException {
-        System.out.print("Type in the lower bound for years of experience: ");
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        int lower_bound = Integer.parseInt(in.readLine());
-        System.out.print("Type in the upper bound for years of experience: ");
-        int upper_bound = Integer.parseInt(in.readLine());
+        try{
+            System.out.print("Type in the lower bound for years of experience: ");
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            int lower_bound = Integer.parseInt(in.readLine());
+            System.out.print("Type in the upper bound for years of experience: ");
+            int upper_bound = Integer.parseInt(in.readLine());
+            if (lower_bound > upper_bound){
+                System.out.println("Lower bound should not greater than upper bound! Please enter again!");
+                count_sales(conn);
+            }
+        } catch(NumberFormatException e){
+            System.out.println("Invalid input. Please enter integer!");
+            count_sales(conn);
+        }
         // retrieve count of sales
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
@@ -389,7 +398,16 @@ public class CSCI3170Proj {
     static void show_popular_parts(Connection conn) throws NumberFormatException, IOException, SQLException {
         System.out.print("Type in the number of parts: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        int input = Integer.parseInt(in.readLine());
+        try{
+            int input = Integer.parseInt(in.readLine());
+            if (input <= 0){
+                System.out.println("Invalid input. Please enter integer greater than 0!");
+                show_popular_parts(conn);
+            }
+        } catch(NumberFormatException e){
+            System.out.println("Invalid input. Please enter integer!");
+            show_popular_parts(conn);
+        }
         // retrieve the N most popular parts
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
