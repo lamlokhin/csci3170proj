@@ -355,26 +355,26 @@ public class CSCI3170Proj {
                 System.out.println("Lower bound should not greater than upper bound! Please enter again!");
                 count_sales(conn);
             }
-        } catch(NumberFormatException e){
-            System.out.println("Invalid input. Please enter integer!");
-            count_sales(conn);
-        }
-        // retrieve count of sales
-        Statement stmt = conn.createStatement();
-        ResultSet rs = null;
-        rs = stmt.executeQuery("SELECT s.sID, s.sName, s.sExperience, COUNT(t.tID) FROM SALESPERSON s JOIN TRANSACTION t ON s.sID = t.sID WHERE s.sExperience BETWEEN " + lower_bound + " AND " + upper_bound + " GROUP BY s.sID, s.sName, s.sExperience ORDER BY s.sID DESC;");
+            // retrieve count of sales
+            Statement stmt = conn.createStatement();
+            ResultSet rs = null;
+            rs = stmt.executeQuery("SELECT s.sID, s.sName, s.sExperience, COUNT(t.tID) FROM SALESPERSON s JOIN TRANSACTION t ON s.sID = t.sID WHERE s.sExperience BETWEEN " + lower_bound + " AND " + upper_bound + " GROUP BY s.sID, s.sName, s.sExperience ORDER BY s.sID DESC;");
 
-        // print list
-        System.out.println("Transaction Record:\n" +
+            // print list
+            System.out.println("Transaction Record:\n" +
                 "| ID | Name | Years of Experience | Number of Transaction |");
-        while (rs.next()) {
-            System.out.printf(" | %d | %s | %d | %d |\n",
+            while (rs.next()) {
+                System.out.printf(" | %d | %s | %d | %d |\n",
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getInt(3),
                     rs.getInt(4));
-        }
-        System.out.println("End of Query");
+            }
+            System.out.println("End of Query");
+            } catch(NumberFormatException e){
+                System.out.println("Invalid input. Please enter integer!");
+                count_sales(conn);
+            }
         main_menu(conn);
     }
 
@@ -404,23 +404,23 @@ public class CSCI3170Proj {
                 System.out.println("Invalid input. Please enter integer greater than 0!");
                 show_popular_parts(conn);
             }
-        } catch(NumberFormatException e){
-            System.out.println("Invalid input. Please enter integer!");
-            show_popular_parts(conn);
-        }
-        // retrieve the N most popular parts
-        Statement stmt = conn.createStatement();
-        ResultSet rs = null;
-        rs = stmt.executeQuery("SELECT p.pID, p.pName, COUNT(t.tID) AS total_no_trans FROM PART p JOIN TRANSACTION t ON p.pID = t.pID GROUP BY p.pID, p.pName ORDER BY total_no_trans DESC LIMIT " + input + ";");
-        // print the parts
-        System.out.println("| Part ID | Part Name | No. of Transaction |");
-        while (rs.next()) {
-            System.out.printf("| %d | %s | %d |\n",
+            // retrieve the N most popular parts
+            Statement stmt = conn.createStatement();
+            ResultSet rs = null;
+            rs = stmt.executeQuery("SELECT p.pID, p.pName, COUNT(t.tID) AS total_no_trans FROM PART p JOIN TRANSACTION t ON p.pID = t.pID GROUP BY p.pID, p.pName ORDER BY total_no_trans DESC LIMIT " + input + ";");
+            // print the parts
+            System.out.println("| Part ID | Part Name | No. of Transaction |");
+            while (rs.next()) {
+                System.out.printf("| %d | %s | %d |\n",
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getInt(3));
-        }
-        System.out.println("End of Query");
+            }
+            System.out.println("End of Query");
+            } catch(NumberFormatException e){
+                System.out.println("Invalid input. Please enter integer!");
+                show_popular_parts(conn);
+            }
         main_menu(conn);
     }
 
