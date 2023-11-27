@@ -334,14 +334,12 @@ public class CSCI3170Proj {
             }
             System.out.println("End of Query");
             main_menu(conn);
+            return;
         } catch(NumberFormatException e){
             System.out.println("Invalid input. Please enter a valid integer choice (1 or 2).");
             list_salespersons(conn);
             return;
         }
-        
-        return;
-
     }
 
     static void count_sales(Connection conn) throws NumberFormatException, IOException, SQLException {
@@ -371,11 +369,14 @@ public class CSCI3170Proj {
                     rs.getInt(4));
             }
             System.out.println("End of Query");
+            stmt.close();
+            main_menu(conn);
+            return;
             } catch(NumberFormatException e){
                 System.out.println("Invalid input. Please enter integer!");
                 count_sales(conn);
+                return;
             }
-        main_menu(conn);
     }
 
     static void show_manufacturer(Connection conn) throws SQLException, NumberFormatException, IOException {
@@ -417,11 +418,14 @@ public class CSCI3170Proj {
                     rs.getInt(3));
             }
             System.out.println("End of Query");
+            main_menu(conn);
+            stmt.close();
+            return;
             } catch(NumberFormatException e){
                 System.out.println("Invalid input. Please enter integer!");
                 show_popular_parts(conn);
+                return;
             }
-        main_menu(conn);
     }
 
     static void create_database(Connection conn) throws NumberFormatException, IOException, SQLException {
