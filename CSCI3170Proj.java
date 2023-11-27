@@ -271,11 +271,11 @@ public class CSCI3170Proj {
         ResultSet rs = null;
         if (input_order == 1) {
             // retrieve in ascending
-            rs = stmt.executeQuery("SELECT ID, name, phone_number, years_of_experience FROM salespersons ORDER BY years_of_experience ASC");
+            rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience ASC");
         }
         if (input_order == 2) {
             // retrieve in descending
-             rs = stmt.executeQuery("SELECT ID, name, phone_number, years_of_experience FROM salespersons ORDER BY years_of_experience DESC");
+             rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience DESC");
         }
         // print list
         System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
