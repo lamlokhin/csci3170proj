@@ -398,6 +398,7 @@ public class CSCI3170Proj {
         Statement stmt = conn.createStatement();
         inputPath = in.readLine();
         System.err.print("Processing...");
+
         // Read "category.txt"
         BufferedReader categoryFileReader;
         try {
@@ -422,102 +423,139 @@ public class CSCI3170Proj {
         }
         categoryFileReader.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+            System.err.println("Error: file not found");
+            main_menu(conn);
+        }
+
+        // Read "manufacturer.txt"
+        BufferedReader manufacturerFileReader;
+        try{
+            manufacturerFileReader = new BufferedReader(new FileReader(inputPath + "/manufacturer.txt"));
+            String manufacturerLine;
+            try{
+                while ((manufacturerLine = manufacturerFileReader.readLine()) != null) {
+                    String[] data_manufacturer= manufacturerLine.split("\t");
+                    // Extract the data values
+                    int mID = Integer.parseInt(data_manufacturer[0]);
+                    String mName = data_manufacturer[1];
+                    String mAddress = data_manufacturer[2];
+                    int mPhoneNumber = Integer.parseInt(data_manufacturer[3]);
+                    // Create the SQL INSERT statement
+                    String insert_manufacturer = "INSERT INTO MANUFACTURER (mID, mName, mAddress, mPhoneNUmber) VALUES (" + mID + ",'" + mName + "','" + mAddress + "'," + mPhoneNumber + ");";
+                    // Execute the INSERT statement
+                    stmt.executeUpdate(insert_manufacturer);
+                }
+            }catch (SQLException e){
+                System.err.println("Error: manufacturer already exists");
+                main_menu(conn);
+            }
+            manufacturerFileReader.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: file not found");
+            main_menu(conn);
+        }
+        // Read "part.txt"
+        BufferedReader partFileReader;
+        try{
+            partFileReader = new BufferedReader(new FileReader(inputPath + "/part.txt"));
+            String partLine;
+            try{
+                while ((partLine = partFileReader.readLine()) != null) {
+                    String[] data_part = partLine.split("\t");
+                    // Extract the data values
+                    int pID = Integer.parseInt(data_part[0]);
+                    String pName = data_part[1];
+                    int pPrice = Integer.parseInt(data_part[2]);
+                    int mID = Integer.parseInt(data_part[3]);
+                    int cID = Integer.parseInt(data_part[4]);
+                    int pWarrantyPeriod = Integer.parseInt(data_part[5]);
+                    int pAvailableQuantity = Integer.parseInt(data_part[6]);
+                    // Create the SQL INSERT statement
+                    String insert_part = "INSERT INTO PART (pID, pName, pPrice, mID, cID, pWarrantyPeriod, pAvailableQuantity) VALUES (" + pID + ",'" + pName + "'," + pPrice + "," + mID + "," + cID + "," + pWarrantyPeriod + "," + pAvailableQuantity + ");";
+                    // Execute the INSERT statement
+                stmt.executeUpdate(insert_part);
+                }
+            }catch (SQLException e){
+                System.err.println("Error: part already exists");
+                main_menu(conn);
+            }
+            partFileReader.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: file not found");
+            main_menu(conn);
+        }
+
+        // Read "salesperson.txt"
+        BufferedReader salespersonFileReader; 
+        try{
+            salespersonFileReader = new BufferedReader(new FileReader(inputPath + "/salesperson.txt"));
+            String salespersonLine;
+            try{
+                while ((salespersonLine = salespersonFileReader.readLine()) != null) {
+                    String[] data_salesperson = salespersonLine.split("\t");
+                    // Extract the data values
+                    int sID = Integer.parseInt(data_salesperson[0]);
+                    String sName = data_salesperson[1];
+                    String sAddress = data_salesperson[2];
+                    int sPhoneNumber = Integer.parseInt(data_salesperson[3]);
+                    int sExperience = Integer.parseInt(data_salesperson[4]);
+                    // Create the SQL INSERT statement
+                    String insert_salesperson = "INSERT INTO SALESPERSON (sID, sName, sAddress, sPhoneNUmber, sExperience) VALUES (" + sID + ",'" + sName + "','" + sAddress + "'," + sPhoneNumber + "," + sExperience + ");";
+                    // Execute the INSERT statement
+                    stmt.executeUpdate(insert_salesperson);
+                }
+            }catch (SQLException e){
+                System.err.println("Error: salesperson already exists");
+                main_menu(conn);
+            }
+            salespersonFileReader.close();
+        } catch (FileNotFoundException e) {
             System.err.println("Error: file not found");
             main_menu(conn);
         }
         
-        
 
-        // Read "manufacturer.txt"
-        BufferedReader manufacturerFileReader = new BufferedReader(new FileReader(inputPath + "/manufacturer.txt"));
-        String manufacturerLine;
-        while ((manufacturerLine = manufacturerFileReader.readLine()) != null) {
-            String[] data_manufacturer= manufacturerLine.split("\t");
-            // Extract the data values
-            int mID = Integer.parseInt(data_manufacturer[0]);
-            String mName = data_manufacturer[1];
-            String mAddress = data_manufacturer[2];
-            int mPhoneNumber = Integer.parseInt(data_manufacturer[3]);
-            // Create the SQL INSERT statement
-            String insert_manufacturer = "INSERT INTO MANUFACTURER (mID, mName, mAddress, mPhoneNUmber) VALUES (" + mID + ",'" + mName + "','" + mAddress + "'," + mPhoneNumber + ");";
-            // Execute the INSERT statement
-            stmt.executeUpdate(insert_manufacturer);
-        }
-        manufacturerFileReader.close();
-
-        // Read "part.txt"
-        BufferedReader partFileReader = new BufferedReader(new FileReader(inputPath + "/part.txt"));
-        String partLine;
-        while ((partLine = partFileReader.readLine()) != null) {
-            String[] data_part = partLine.split("\t");
-            // Extract the data values
-            int pID = Integer.parseInt(data_part[0]);
-            String pName = data_part[1];
-            int pPrice = Integer.parseInt(data_part[2]);
-            int mID = Integer.parseInt(data_part[3]);
-            int cID = Integer.parseInt(data_part[4]);
-            int pWarrantyPeriod = Integer.parseInt(data_part[5]);
-            int pAvailableQuantity = Integer.parseInt(data_part[6]);
-
-            // Create the SQL INSERT statement
-            String insert_part = "INSERT INTO PART (pID, pName, pPrice, mID, cID, pWarrantyPeriod, pAvailableQuantity) VALUES (" + pID + ",'" + pName + "'," + pPrice + "," + mID + "," + cID + "," + pWarrantyPeriod + "," + pAvailableQuantity + ");";
-            // Execute the INSERT statement
-            stmt.executeUpdate(insert_part);
-        }
-        partFileReader.close();
-
-        // Read "salesperson.txt"
-        BufferedReader salespersonFileReader = new BufferedReader(new FileReader(inputPath + "/salesperson.txt"));
-        String salespersonLine;
-        while ((salespersonLine = salespersonFileReader.readLine()) != null) {
-            String[] data_salesperson = salespersonLine.split("\t");
-            // Extract the data values
-            int sID = Integer.parseInt(data_salesperson[0]);
-            String sName = data_salesperson[1];
-            String sAddress = data_salesperson[2];
-            int sPhoneNumber = Integer.parseInt(data_salesperson[3]);
-            int sExperience = Integer.parseInt(data_salesperson[4]);
-            // Create the SQL INSERT statement
-            String insert_salesperson = "INSERT INTO SALESPERSON (sID, sName, sAddress, sPhoneNUmber, sExperience) VALUES (" + sID + ",'" + sName + "','" + sAddress + "'," + sPhoneNumber + "," + sExperience + ");";
-            // Execute the INSERT statement
-            stmt.executeUpdate(insert_salesperson);
-        }
-        salespersonFileReader.close();
-
-        try (// Read "transaction.txt"
-        BufferedReader transactionFileReader = new BufferedReader(new FileReader(inputPath + "/transaction.txt"))) {
+        BufferedReader transactionFileReader;
+        try{
+            transactionFileReader = new BufferedReader(new FileReader(inputPath + "/transaction.txt"));
             String transactionLine;
-            SimpleDateFormat dt = new SimpleDateFormat("dd/mm/yyyy");
-            SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
-            while ((transactionLine = transactionFileReader.readLine()) != null) {
-                String[] data_transaction = transactionLine.split("\t");
-                // Extract the data values
-                int tID = Integer.parseInt(data_transaction[0]);
-                int pID = Integer.parseInt(data_transaction[1]);
-                int sID = Integer.parseInt(data_transaction[2]);
-                Date tDate_temp;
-                try {
-                    tDate_temp = dt.parse(data_transaction[3]);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    System.err.println("Date format ERROR");
-                    return;
+            try{
+                SimpleDateFormat dt = new SimpleDateFormat("dd/mm/yyyy");
+                SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
+                while ((transactionLine = transactionFileReader.readLine()) != null) {
+                    String[] data_transaction = transactionLine.split("\t");
+                    // Extract the data values
+                    int tID = Integer.parseInt(data_transaction[0]);
+                    int pID = Integer.parseInt(data_transaction[1]);
+                    int sID = Integer.parseInt(data_transaction[2]);
+                    Date tDate_temp;
+                    try {
+                        tDate_temp = dt.parse(data_transaction[3]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        System.err.println("Date format ERROR");
+                        return;
+                    }
+                    String tDate = dt1.format(tDate_temp);
+                    // Create the SQL INSERT statement
+                    String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + ",'" + tDate + "');";
+                    // Execute the INSERT statement
+                    stmt.executeUpdate(insert_transaction);
                 }
-                String tDate = dt1.format(tDate_temp);
-                // Create the SQL INSERT statement
-                String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + ",'" + tDate + "');";
-                // Execute the INSERT statement
-                stmt.executeUpdate(insert_transaction);
+            } catch (SQLException e){
+                System.err.println("Error: transaction already exists");
+                main_menu(conn);
             }
             transactionFileReader.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: file not found");
+            main_menu(conn);
         }
+
         stmt.close();
-        // read files and load data from inputPath
         System.err.println("Done! Data is inputted to the database!");
         main_menu(conn);
         return;
-
     }
 
     static void show_content(Connection conn) throws NumberFormatException, IOException, SQLException {
