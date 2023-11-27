@@ -34,7 +34,7 @@ public class CSCI3170Proj {
             manager_menu(conn);
         }
         if (input == 4){
-            System.exit();
+            System.exit(0);
         }
 
         return;
