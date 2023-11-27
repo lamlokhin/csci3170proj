@@ -403,8 +403,8 @@ public class CSCI3170Proj {
         BufferedReader categoryFileReader;
         try {
             categoryFileReader = new BufferedReader(new FileReader(inputPath + "/category.txt"));
-            String categoryLine;
             try {
+                String categoryLine;
                 while ((categoryLine = categoryFileReader.readLine()) != null) {
                     // Split the line by tab delimiter
                     String[] data_category = categoryLine.split("\t");
@@ -415,13 +415,12 @@ public class CSCI3170Proj {
                     String insert_category = "INSERT INTO CATEGORY (cID, cName) VALUES (" + cID + ",'" + cName + "');";
                     // Execute the INSERT statement
                     stmt.executeUpdate(insert_category);
+                }
+            } catch (SQLException e){
+                System.err.println("Error: category already exists");
+                main_menu(conn);
             }
-        } 
-        catch (SQLException e){
-            System.err.println("Error: category already exists");
-            main_menu(conn);
-        }
-        categoryFileReader.close();
+            categoryFileReader.close();
         } catch (FileNotFoundException e) {
             System.err.println("Error: file not found");
             main_menu(conn);
@@ -431,8 +430,8 @@ public class CSCI3170Proj {
         BufferedReader manufacturerFileReader;
         try{
             manufacturerFileReader = new BufferedReader(new FileReader(inputPath + "/manufacturer.txt"));
-            String manufacturerLine;
             try{
+                String manufacturerLine;
                 while ((manufacturerLine = manufacturerFileReader.readLine()) != null) {
                     String[] data_manufacturer= manufacturerLine.split("\t");
                     // Extract the data values
@@ -445,7 +444,7 @@ public class CSCI3170Proj {
                     // Execute the INSERT statement
                     stmt.executeUpdate(insert_manufacturer);
                 }
-            }catch (SQLException e){
+            } catch (SQLException e){
                 System.err.println("Error: manufacturer already exists");
                 main_menu(conn);
             }
@@ -454,12 +453,13 @@ public class CSCI3170Proj {
             System.err.println("Error: file not found");
             main_menu(conn);
         }
+
         // Read "part.txt"
         BufferedReader partFileReader;
         try{
             partFileReader = new BufferedReader(new FileReader(inputPath + "/part.txt"));
-            String partLine;
             try{
+                String partLine;
                 while ((partLine = partFileReader.readLine()) != null) {
                     String[] data_part = partLine.split("\t");
                     // Extract the data values
@@ -473,9 +473,9 @@ public class CSCI3170Proj {
                     // Create the SQL INSERT statement
                     String insert_part = "INSERT INTO PART (pID, pName, pPrice, mID, cID, pWarrantyPeriod, pAvailableQuantity) VALUES (" + pID + ",'" + pName + "'," + pPrice + "," + mID + "," + cID + "," + pWarrantyPeriod + "," + pAvailableQuantity + ");";
                     // Execute the INSERT statement
-                stmt.executeUpdate(insert_part);
+                    stmt.executeUpdate(insert_part);
                 }
-            }catch (SQLException e){
+            } catch (SQLException e){
                 System.err.println("Error: part already exists");
                 main_menu(conn);
             }
@@ -489,8 +489,8 @@ public class CSCI3170Proj {
         BufferedReader salespersonFileReader; 
         try{
             salespersonFileReader = new BufferedReader(new FileReader(inputPath + "/salesperson.txt"));
-            String salespersonLine;
             try{
+                String salespersonLine;
                 while ((salespersonLine = salespersonFileReader.readLine()) != null) {
                     String[] data_salesperson = salespersonLine.split("\t");
                     // Extract the data values
@@ -514,12 +514,12 @@ public class CSCI3170Proj {
             main_menu(conn);
         }
         
-
+        // Read "transaction.txt"
         BufferedReader transactionFileReader;
         try{
             transactionFileReader = new BufferedReader(new FileReader(inputPath + "/transaction.txt"));
-            String transactionLine;
             try{
+                String transactionLine;
                 SimpleDateFormat dt = new SimpleDateFormat("dd/mm/yyyy");
                 SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
                 while ((transactionLine = transactionFileReader.readLine()) != null) {
@@ -534,6 +534,8 @@ public class CSCI3170Proj {
                     } catch (ParseException e) {
                         e.printStackTrace();
                         System.err.println("Date format ERROR");
+                        transactionFileReader.close();
+                        main_menu(conn);
                         return;
                     }
                     String tDate = dt1.format(tDate_temp);
@@ -542,12 +544,12 @@ public class CSCI3170Proj {
                     // Execute the INSERT statement
                     stmt.executeUpdate(insert_transaction);
                 }
-            } catch (SQLException e){
-                System.err.println("Error: transaction already exists");
+            }catch (SQLException e){
+                System.err.println("Error: salesperson already exists");
                 main_menu(conn);
             }
             transactionFileReader.close();
-        } catch (FileNotFoundException e) {
+        }catch (FileNotFoundException e) {
             System.err.println("Error: file not found");
             main_menu(conn);
         }
