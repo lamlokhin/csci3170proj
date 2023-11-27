@@ -74,18 +74,18 @@ public class CSCI3170Proj {
                 "2. By price, descending order\n" +
                 "Choose ordering: ");
         int order = Integer.parseInt(in.readLine());
-        String query = "select part.pID,part.pName,manufacturer.mName,category.cName,part.pAvailableQuantity,part.pWarrantyPeriod,part.pPrice ";
-        query += "from part,manufacturer,category ";
-        query += "where part.cID = category.cID and part.mID = manufacturer.mID and ";
+        String query = "select PART.pID,PART.pName,MANUFACTURER.mName,CATEGORY.cName,PART.pAvailableQuantity,PART.pWarrantyPeriod,PART.pPrice ";
+        query += "from PART,MANUFACTURER,CATEGORY ";
+        query += "where PART.cID = CATEGORY.cID and PART.mID = MANUFACTURER.mID and ";
         if (criterion == 1) {
-            query += "part.pName like ? ";
+            query += "PART.pName like ? ";
         } else if (criterion == 2) {
-            query += "manufacturer.mName like ? ";
+            query += "MANUFACTURER.mName like ? ";
         }
         if (order == 1) {
-            query += "order by part.pPrice ASC;";
+            query += "order by PART.pPrice ASC;";
         } else if (order == 2) {
-            query += "order by part.pPrice DESC;";
+            query += "order by PART.pPrice DESC;";
         }
         PreparedStatement preQuery = conn.prepareStatement(query);
         preQuery.setString(1, "%" + keyword + "%");
@@ -111,7 +111,7 @@ public class CSCI3170Proj {
         /* get part id with checking */
         System.out.print("Enter The Part ID:");
         int part_id = Integer.parseInt(in.readLine());
-        String quanCheckQuery = "Select pAvailableQuantity from part where pID = ?";
+        String quanCheckQuery = "Select pAvailableQuantity from PART where pID = ?";
         PreparedStatement preQuanCheckQuery = conn.prepareStatement(quanCheckQuery);
         preQuanCheckQuery.setInt(1, part_id);
         ResultSet result1 = preQuanCheckQuery.executeQuery();
@@ -134,7 +134,7 @@ public class CSCI3170Proj {
         /* get salesperson id with checking */
         System.out.print("Enter The Salesperson ID:");
         int salesperson_id = Integer.parseInt(in.readLine());
-        String salesPersonCheckQuery = "Select count(*) as num from salesperson where sID = ?";
+        String salesPersonCheckQuery = "Select count(*) as num from SALESPERSON where sID = ?";
         PreparedStatement preSalesPersonCheckQuery = conn.prepareStatement(salesPersonCheckQuery);
         preSalesPersonCheckQuery.setInt(1, salesperson_id);
         ResultSet result2 = preSalesPersonCheckQuery.executeQuery();
@@ -152,14 +152,14 @@ public class CSCI3170Proj {
                 salesPersonExist = true;
             }
         }
-        String getLastTIDQuery = "select max(tID) from transaction;";
+        String getLastTIDQuery = "select max(tID) from TRANSACTION;";
         PreparedStatement preGetLastTIDQuery = conn.prepareStatement(getLastTIDQuery);
         ResultSet result3 = preGetLastTIDQuery.executeQuery();
         int lastTID = 0;
         if (result3.next())
             lastTID = result3.getInt(1);
         /* Inserting transaction */
-        String addTransactionQuery = "Insert into transaction (tID,pID,sID,tDate) values (?,?,?,?);";
+        String addTransactionQuery = "Insert into TRANSACTION (tID,pID,sID,tDate) values (?,?,?,?);";
 
         PreparedStatement preAddTransactionQuery = conn.prepareStatement(addTransactionQuery);
         preAddTransactionQuery.setInt(1, lastTID + 1);
@@ -170,12 +170,12 @@ public class CSCI3170Proj {
         preAddTransactionQuery.executeUpdate();
 
         /* Updating part available quantity */
-        String updatePartQuanQuery = "Update part set pAvailableQuantity= ? where pID= ?;";
+        String updatePartQuanQuery = "Update PART set pAvailableQuantity= ? where pID= ?;";
         PreparedStatement preUpdatePartQuanQuery = conn.prepareStatement(updatePartQuanQuery);
         preUpdatePartQuanQuery.setInt(1, availableQuantity - 1);
         preUpdatePartQuanQuery.setInt(2, part_id);
         preUpdatePartQuanQuery.executeUpdate();
-        String getUpdatedPartRecordQuery = "Select pName,pAvailableQuantity from part where pID= ?;";
+        String getUpdatedPartRecordQuery = "Select pName,pAvailableQuantity from PART where pID= ?;";
         PreparedStatement preGetUpdatedPartRecordQuery = conn.prepareStatement(getUpdatedPartRecordQuery);
         preGetUpdatedPartRecordQuery.setInt(1, part_id);
         ResultSet result4 = preGetUpdatedPartRecordQuery.executeQuery();
