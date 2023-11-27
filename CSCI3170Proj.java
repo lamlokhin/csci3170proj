@@ -325,7 +325,7 @@ public class CSCI3170Proj {
         // print manufacuturers
         System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
         while (rs.next()) {
-            System.out.printf(" | %d | %s | %d |",
+            System.out.printf(" | %d | %s | %d |\n",
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getInt(3));
