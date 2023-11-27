@@ -321,7 +321,7 @@ public class CSCI3170Proj {
         // retrieve manufacturers in decending order of total sales value
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
-        rs = stmt.executeQuery("SELECT m.mID, m.mName, SUM(p.pPrice) AS total_sales_value FROM Manufacturer m JOIN PART p ON m.mID = p.mID GROUP BY m.mID, m.mName ORDER BY total_sales_value DESC");
+        rs = stmt.executeQuery("SELECT m.mID, m.mName, SUM(p.pPrice) AS total_sales_value FROM MANUFACTURER m JOIN PART p ON m.mID = p.mID GROUP BY m.mID, m.mName ORDER BY total_sales_value DESC");
         // print manufacuturers
         System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
         while (rs.next()) {
