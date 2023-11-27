@@ -33,6 +33,9 @@ public class CSCI3170Proj {
         if (input == 3) {
             manager_menu(conn);
         }
+        if (input == 4){
+            System.exit();
+        }
 
         return;
     }
@@ -569,7 +572,8 @@ public class CSCI3170Proj {
         // For each tuple; each field, print line
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
-        if (inputTable.equals("category")) {
+        try{
+            if (inputTable.equals("category")) {
             System.out.println("| cID | cNAme |");
             // Show content of Category
             rs = stmt.executeQuery("SELECT * FROM CATEGORY");
@@ -631,6 +635,12 @@ public class CSCI3170Proj {
                 rs.getString(4));
             }
         }
+        } catch(SQLException e){
+            System.out.println("Error accessing the database: " + e.getMessage());
+            e.printStackTrace();
+            main_menu(conn);
+        }
+        
         rs.close();
         stmt.close();
         main_menu(conn);
