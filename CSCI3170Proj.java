@@ -511,9 +511,9 @@ public class CSCI3170Proj {
             // Show content of Category
             rs = stmt.executeQuery("SELECT * FROM CATEGORY");
             while (rs.next()) {
-            int cID = rs.getInt("cID");
-            String cName = rs.getString("cName");
-            System.out.println("| " + cID + " | " + cName + " |");
+                System.out.printf(" | %d | %s |\n",
+                rs.getInt(1),
+                rs.getString(2));
             }
         }
         if (inputTable.equals("manufacturer")) {
@@ -521,11 +521,11 @@ public class CSCI3170Proj {
              // Show content of Manufacturer
             rs = stmt.executeQuery("SELECT * FROM MANUFACTURER");
             while (rs.next()) {
-                int mID = rs.getInt("mID");
-                String mName = rs.getString("mName");
-                String mAddress = rs.getString("mAddress");
-                int mPhoneNumber = rs.getInt("mPhoneNumber");
-                System.out.println("| " + mID + " | " + mName + " | " + mAddress + " | " + mPhoneNumber + " |");
+                System.out.printf(" | %d | %s | %s | %d |\n",
+                rs.getInt(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getInt(4));
             }
         }
         if (inputTable.equals("part")) {
@@ -533,27 +533,26 @@ public class CSCI3170Proj {
              // Show content of Part
             rs = stmt.executeQuery("SELECT * FROM PART");
             while (rs.next()) {
-                int pID = rs.getInt("pID");
-                String pName = rs.getString("pName");
-                int pPrice = rs.getInt("pPrice");
-                int mID = rs.getInt("mID");
-                int cID = rs.getInt("cID");
-                int pWarrantyPeriod = rs.getInt("pWarrantyPeriod");
-                int pAvailableQuantity = rs.getInt("pAvailableQuantity");
-                System.out.println("| " + pID + " | " + pName + " | " + pPrice + " | " + mID + " | " + cID + " | " + pWarrantyPeriod + " | " + pAvailableQuantity + " |");
-            }
+                System.out.printf(" | %d | %s | %d | %d | %d | %d | %d |\n",
+                rs.getInt(1),
+                rs.getString(2),
+                rs.getInt(3),
+                rs.getInt(4),
+                rs.getInt(5),
+                rs.getInt(6),
+                rs.getInt(7));
         }
         if (inputTable.equals("salesperson")) {
             System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
              // Show content of Salesperson
             rs = stmt.executeQuery("SELECT * FROM SALESPERSON");
             while (rs.next()) {
-                int sID = rs.getInt("sID");
-                String sName = rs.getString("sName");
-                String sAddress = rs.getString("sAddress");
-                int sPhoneNumber = rs.getInt("sPhoneNumber");
-                int sExperience = rs.getInt("sExperience");
-                System.out.println("| " + sID + " | " + sName + " | " + sAddress + " | " + sPhoneNumber + " | " + sExperience + " |");
+                System.out.printf(" | %d | %s | %s | %d | %d |\n",
+                rs.getInt(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getInt(4),
+                rs.getInt(5));
             }
         }
         if (inputTable.equals("transaction")) {
@@ -561,11 +560,11 @@ public class CSCI3170Proj {
              // Show content of Transaction
             rs = stmt.executeQuery("SELECT * FROM TRANSACTION");
             while (rs.next()) {
-                int tID = rs.getInt("tID");
-                int pID = rs.getInt("pID");
-                int sID = rs.getInt("sID");
-                String tDate = rs.getString("tDate");
-                System.out.println("| " + tID + " | " + pID + " | " + sID + " | " + tDate + " |");
+                System.out.printf(" | %d | %d | %d | %s |\n",
+                rs.getInt(1),
+                rs.getInt(2),
+                rs.getInt(3),
+                rs.getString(4));
             }
         }
         rs.close();
