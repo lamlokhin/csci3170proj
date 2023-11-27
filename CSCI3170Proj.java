@@ -301,7 +301,7 @@ public class CSCI3170Proj {
         // retrieve count of sales
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
-        rs = stmt.executeQuery("SELECT s.sID, s.sName, s.sExperience, COUNT(t.tID) FROM SALESPERSON s JOIN TRANSACTION t ON s.sID = t.tID WHERE s.sExperience BETWEEN " + lower_bound + " AND " + upper_bound + " GROUP BY s.sID, s.sName, s.sExperience ORDER BY s.sID DESC");
+        rs = stmt.executeQuery("SELECT s.sID, s.sName, s.sExperience, COUNT(t.tID) FROM SALESPERSON s JOIN TRANSACTION t ON s.sID = t.sID WHERE s.sExperience BETWEEN " + lower_bound + " AND " + upper_bound + " GROUP BY s.sID, s.sName, s.sExperience ORDER BY s.sID DESC");
 
         // print list
         System.out.println("Transaction Record:\n" +
