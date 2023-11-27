@@ -573,77 +573,82 @@ public class CSCI3170Proj {
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         try{
-            if (inputTable.equals("category")) {
-            System.out.println("| cID | cNAme |");
-            // Show content of Category
-            rs = stmt.executeQuery("SELECT * FROM CATEGORY");
-            while (rs.next()) {
-                System.out.printf("| %d | %s |\n",
-                rs.getInt(1),
-                rs.getString(2));
+            try{
+                if (inputTable.equals("category")) {
+                System.out.println("| cID | cNAme |");
+                // Show content of Category
+                rs = stmt.executeQuery("SELECT * FROM CATEGORY");
+                while (rs.next()) {
+                    System.out.printf("| %d | %s |\n",
+                    rs.getInt(1),
+                    rs.getString(2));
+                }
             }
-        }
-        if (inputTable.equals("manufacturer")) {
-            System.out.println("| mID | mName | mAddress | mPhoneNumber |");
-             // Show content of Manufacturer
-            rs = stmt.executeQuery("SELECT * FROM MANUFACTURER");
-            while (rs.next()) {
-                System.out.printf("| %d | %s | %s | %d |\n",
-                rs.getInt(1),
-                rs.getString(2),
-                rs.getString(3),
-                rs.getInt(4));
+            if (inputTable.equals("manufacturer")) {
+                System.out.println("| mID | mName | mAddress | mPhoneNumber |");
+                // Show content of Manufacturer
+                rs = stmt.executeQuery("SELECT * FROM MANUFACTURER");
+                while (rs.next()) {
+                    System.out.printf("| %d | %s | %s | %d |\n",
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getInt(4));
+                }
             }
-        }
-        if (inputTable.equals("part")) {
-            System.out.println("| pID | pName | pPrice | mID | cID | pWarrantyPeriod | pAvailableQuantity |");
-             // Show content of Part
-            rs = stmt.executeQuery("SELECT * FROM PART");
-            while (rs.next()) {
-                System.out.printf("| %d | %s | %d | %d | %d | %d | %d |\n",
-                rs.getInt(1),
-                rs.getString(2),
-                rs.getInt(3),
-                rs.getInt(4),
-                rs.getInt(5),
-                rs.getInt(6),
-                rs.getInt(7));
+            if (inputTable.equals("part")) {
+                System.out.println("| pID | pName | pPrice | mID | cID | pWarrantyPeriod | pAvailableQuantity |");
+                // Show content of Part
+                rs = stmt.executeQuery("SELECT * FROM PART");
+                while (rs.next()) {
+                    System.out.printf("| %d | %s | %d | %d | %d | %d | %d |\n",
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getInt(4),
+                    rs.getInt(5),
+                    rs.getInt(6),
+                    rs.getInt(7));
+                }
             }
-        }
-        if (inputTable.equals("salesperson")) {
-            System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
-             // Show content of Salesperson
-            rs = stmt.executeQuery("SELECT * FROM SALESPERSON");
-            while (rs.next()) {
-                System.out.printf("| %d | %s | %s | %d | %d |\n",
-                rs.getInt(1),
-                rs.getString(2),
-                rs.getString(3),
-                rs.getInt(4),
-                rs.getInt(5));
+            if (inputTable.equals("salesperson")) {
+                System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
+                 // Show content of Salesperson
+                rs = stmt.executeQuery("SELECT * FROM SALESPERSON");
+                while (rs.next()) {
+                    System.out.printf("| %d | %s | %s | %d | %d |\n",
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getInt(4),
+                    rs.getInt(5));
+                }
             }
-        }
-        if (inputTable.equals("transaction")) {
-            System.out.println("| tID | pID | sID | tDate |");
-             // Show content of Transaction
-            rs = stmt.executeQuery("SELECT * FROM TRANSACTION");
-            while (rs.next()) {
-                System.out.printf("| %d | %d | %d | %s |\n",
-                rs.getInt(1),
-                rs.getInt(2),
-                rs.getInt(3),
-                rs.getString(4));
+            if (inputTable.equals("transaction")) {
+                System.out.println("| tID | pID | sID | tDate |");
+                // Show content of Transaction
+                rs = stmt.executeQuery("SELECT * FROM TRANSACTION");
+                while (rs.next()) {
+                    System.out.printf("| %d | %d | %d | %s |\n",
+                    rs.getInt(1),
+                    rs.getInt(2),
+                    rs.getInt(3),
+                    rs.getString(4));
+                }
             }
-        }
         } catch(SQLException e){
             System.out.println("Table not found!");
             main_menu(conn);
         }
+    } catch(FileNotFoundException e){
+            System.err.println("Error: file not found");
+            main_menu(conn);
+    }
         
-        rs.close();
-        stmt.close();
-        main_menu(conn);
-        return;
+    rs.close();
+    stmt.close();
+    main_menu(conn);
+    return;
     }
 
     public static void main(String[] args) throws NumberFormatException, IOException, SQLException {
