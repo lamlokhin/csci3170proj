@@ -280,7 +280,7 @@ public class CSCI3170Proj {
         // print list
         System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
         while (rs.next()) {
-            System.out.printf(" | %d | %s | %d | %d |\n",
+            System.out.printf("| %d | %s | %d | %d |\n",
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getInt(3),
@@ -317,7 +317,7 @@ public class CSCI3170Proj {
         main_menu(conn);
     }
 
-    static void show_manufacturer(Connection conn) throws SQLException {
+    static void show_manufacturer(Connection conn) throws SQLException, NumberFormatException, IOException {
         // retrieve manufacturers in decending order of total sales value
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
@@ -325,12 +325,13 @@ public class CSCI3170Proj {
         // print manufacuturers
         System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
         while (rs.next()) {
-            System.out.printf(" | %d | %s | %d |\n",
+            System.out.printf("| %d | %s | %d |\n",
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getInt(3));
         }
         System.out.println("End of Query");
+        main_menu(conn);
     }
 
     static void show_popular_parts(Connection conn) throws NumberFormatException, IOException, SQLException {
