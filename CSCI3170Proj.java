@@ -286,6 +286,7 @@ public class CSCI3170Proj {
                     rs.getInt(3),
                     rs.getInt(4));
         }
+        System.out.println("End of Query");
         main_menu(conn);
         return;
 
@@ -298,17 +299,19 @@ public class CSCI3170Proj {
         System.out.print("Type in the upper bound for years of experience: ");
         int upper_bound = Integer.parseInt(in.readLine());
         // retrieve count of sales
-        ResultSet result = null;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = null;
+        rs = stmt.executeQuery("SELECT sID, sName, sExperience, COUNT(TRANSACTION.tID) FROM SALESPERSON s JOIN TRANSACTION t ON s.sID = t.sID WHERE BETWEEN" + lower_bound + " AND " + upper_bound + " ORDER BY sExperience DESC");
 
         // print list
         System.out.println("Transaction Record:\n" +
                 "| ID | Name | Years of Experience | Number of Transaction |");
-        while (result.next()) {
-            System.out.printf(" | %s | %s | %s | %s |",
-                    result.getString(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4));
+        while (rs.next()) {
+            System.out.printf(" | %d | %s | %d | %d |",
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getInt(4));
         }
         System.out.println("End of Query");
         main_menu(conn);
@@ -541,6 +544,7 @@ public class CSCI3170Proj {
                 rs.getInt(5),
                 rs.getInt(6),
                 rs.getInt(7));
+            }
         }
         if (inputTable.equals("salesperson")) {
             System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
