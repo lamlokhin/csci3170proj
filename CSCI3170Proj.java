@@ -518,7 +518,7 @@ public class CSCI3170Proj {
             // Show content of Category
             rs = stmt.executeQuery("SELECT * FROM CATEGORY");
             while (rs.next()) {
-                System.out.printf(" | %d | %s |\n",
+                System.out.printf("| %d | %s |\n",
                 rs.getInt(1),
                 rs.getString(2));
             }
@@ -528,7 +528,7 @@ public class CSCI3170Proj {
              // Show content of Manufacturer
             rs = stmt.executeQuery("SELECT * FROM MANUFACTURER");
             while (rs.next()) {
-                System.out.printf(" | %d | %s | %s | %d |\n",
+                System.out.printf("| %d | %s | %s | %d |\n",
                 rs.getInt(1),
                 rs.getString(2),
                 rs.getString(3),
@@ -540,7 +540,7 @@ public class CSCI3170Proj {
              // Show content of Part
             rs = stmt.executeQuery("SELECT * FROM PART");
             while (rs.next()) {
-                System.out.printf(" | %d | %s | %d | %d | %d | %d | %d |\n",
+                System.out.printf("| %d | %s | %d | %d | %d | %d | %d |\n",
                 rs.getInt(1),
                 rs.getString(2),
                 rs.getInt(3),
@@ -555,7 +555,7 @@ public class CSCI3170Proj {
              // Show content of Salesperson
             rs = stmt.executeQuery("SELECT * FROM SALESPERSON");
             while (rs.next()) {
-                System.out.printf(" | %d | %s | %s | %d | %d |\n",
+                System.out.printf("| %d | %s | %s | %d | %d |\n",
                 rs.getInt(1),
                 rs.getString(2),
                 rs.getString(3),
@@ -568,7 +568,7 @@ public class CSCI3170Proj {
              // Show content of Transaction
             rs = stmt.executeQuery("SELECT * FROM TRANSACTION");
             while (rs.next()) {
-                System.out.printf(" | %d | %d | %d | %s |\n",
+                System.out.printf("| %d | %d | %d | %s |\n",
                 rs.getInt(1),
                 rs.getInt(2),
                 rs.getInt(3),
