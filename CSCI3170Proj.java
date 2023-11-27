@@ -319,14 +319,16 @@ public class CSCI3170Proj {
 
     static void show_manufacturer(Connection conn) throws SQLException {
         // retrieve manufacturers in decending order of total sales value
-        ResultSet result = null;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = null;
+        rs = stmt.executeQuery("SELECT m.mID, m.mName, SUM(p.pPrice) AS total_sales_value FROM Manufacturer m JOIN PART p ON m.mID = p.mID GROUP BY m.mID, m.mName ORDER BY total_sales_value DESC");
         // print manufacuturers
         System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
-        while (result.next()) {
-            System.out.printf(" | %s | %s | %s |",
-                    result.getString(1),
-                    result.getString(2),
-                    result.getString(3));
+        while (rs.next()) {
+            System.out.printf(" | %d | %s | %d |",
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3));
         }
         System.out.println("End of Query");
     }
