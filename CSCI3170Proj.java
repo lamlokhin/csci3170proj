@@ -638,14 +638,10 @@ public class CSCI3170Proj {
             }
         } catch(SQLException e){
             System.out.println("Table not found!");
-            rs.close();
-            stmt.close();
             main_menu(conn);
         }
-    } catch(FileNotFoundException e){
+    } catch(NullPointerException e){
             System.err.println("Error: file not found");
-            rs.close();
-            stmt.close();
             main_menu(conn);
     }
         
