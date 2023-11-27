@@ -280,11 +280,11 @@ public class CSCI3170Proj {
         // print list
         System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
         while (rs.next()) {
-            int sID = rs.getInt("sID");
-            String sName = rs.getString("sName");
-            int sPhoneNumber = rs.getInt("sPhoneNumber");
-            int sExperience = rs.getInt("sExperience");
-            System.out.println("| " + sID + " | " + sName + " | " + sPhoneNumber + " | " + sExperience + " |");        
+            System.out.printf(" | %d | %s | %d | %d |",
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getInt(4));
         }
         main_menu(conn);
         return;
