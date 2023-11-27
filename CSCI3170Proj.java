@@ -314,8 +314,7 @@ public class CSCI3170Proj {
             if (input_order == 1) {
                 // retrieve in ascending
                 rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience ASC;");
-            }
-            if (input_order == 2) {
+            } else if (input_order == 2) {
                 // retrieve in descending
                 rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience DESC;");
             } else{
