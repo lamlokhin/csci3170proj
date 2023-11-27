@@ -38,10 +38,13 @@ public class CSCI3170Proj {
                 System.out.println("Program terminated.");
             } else{
                 System.out.println("Invalid input. Please enter a valid choice (1-4).");
+                main_menu(conn);
+                return;
             }
         } catch(NumberFormatException e){
             System.out.println("Invalid input. Please enter a valid integer choice (1-4).");
             main_menu(conn);
+            return;
         }
 
         return;
@@ -67,10 +70,13 @@ public class CSCI3170Proj {
                 main_menu(conn);
             } else{
                 System.out.println("Invalid input. Please enter a valid choice (1-3).");
+                salesperson_menu(conn);
+                return;
             }
         }catch(NumberFormatException e){
             System.out.println("Invalid input. Please enter a valid integer choice (1-3).");
             salesperson_menu(conn);
+            return;
         }
         
 
@@ -242,10 +248,13 @@ public class CSCI3170Proj {
                 main_menu(conn);
             }else {
                 System.out.println("Invalid input. Please enter a valid choice (1-5).");
+                manager_menu(conn);
+                return;
             }
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Please enter a valid integer choice (1-5).");
             manager_menu(conn);
+            return;
         }
         return;
     }
@@ -279,9 +288,13 @@ public class CSCI3170Proj {
                 main_menu(conn);
             } else {
                 System.out.println("Invalid input. Please enter a valid choice (1-5).");
+                admin_menu(conn);
+                return;
             }
         } catch(NumberFormatException e){
             System.out.println("Invalid input. Please enter a valid integer choice (1-5).");
+            admin_menu(conn);
+            return;
         }
         return;
     }
@@ -308,6 +321,7 @@ public class CSCI3170Proj {
             } else{
                 System.out.println("Invalid input. Please enter a valid choice (1 or 2).");
                 list_salespersons(conn);
+                return;
             }
             // print list
             System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
@@ -321,7 +335,9 @@ public class CSCI3170Proj {
             System.out.println("End of Query");
             main_menu(conn);
         } catch(NumberFormatException e){
-
+            System.out.println("Invalid input. Please enter a valid integer choice (1 or 2).");
+            list_salespersons(conn);
+            return;
         }
         
         return;
