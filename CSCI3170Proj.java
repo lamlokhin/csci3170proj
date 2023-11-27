@@ -265,24 +265,26 @@ public class CSCI3170Proj {
                 "Choose the list ordering: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input_order;
-
         input_order = Integer.parseInt(in.readLine());
         // retrieve list in requested order
-        ResultSet result = null;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = null;
         if (input_order == 1) {
             // retrieve in ascending
+            rs = stmt.executeQuery("SELECT ID, name, phone_number, years_of_experience FROM salespersons ORDER BY years_of_experience ASC");
         }
         if (input_order == 2) {
             // retrieve in descending
+             rs = stmt.executeQuery("SELECT ID, name, phone_number, years_of_experience FROM salespersons ORDER BY years_of_experience DESC");
         }
         // print list
         System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
-        while (result.next()) {
+        while (rs.next()) {
             System.out.printf(" | %s | %s | %s | %s |",
-                    result.getString(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4));
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getInt(4));
         }
         main_menu(conn);
         return;
@@ -481,7 +483,7 @@ public class CSCI3170Proj {
             // Execute the INSERT statement
             stmt.executeUpdate(insert_transaction);
         }
-        
+
         categoryFileReader.close();
         manufacturerFileReader.close();
         partFileReader.close();
