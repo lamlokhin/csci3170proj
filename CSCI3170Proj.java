@@ -636,8 +636,7 @@ public class CSCI3170Proj {
             }
         }
         } catch(SQLException e){
-            System.out.println("Error accessing the database: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Table not found!");
             main_menu(conn);
         }
         
