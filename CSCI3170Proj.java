@@ -341,7 +341,7 @@ public class CSCI3170Proj {
         // retrieve the N most popular parts
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
-        rs = stmt.executeQuery("SELECT p.pID, p.pName, COUNT(t.tID) AS total_no_trans FROM PART p JOIN TRANSACTION t ON p.pID = t.pID GROUP BY p.pID, p.pName ORDER BY total_no_trans DESC;");
+        rs = stmt.executeQuery("SELECT p.pID, p.pName, COUNT(t.tID) AS total_no_trans FROM PART p JOIN TRANSACTION t ON p.pID = t.pID GROUP BY p.pID, p.pName ORDER BY total_no_trans DESC LIMIT " + input + ";");
         // print the parts
         System.out.println("| Part ID | Part Name | No. of Transaction |");
         while (rs.next()) {
@@ -412,6 +412,7 @@ public class CSCI3170Proj {
             // Execute the INSERT statement
             stmt.executeUpdate(insert_category);
         }
+        categoryFileReader.close();
 
         // Read "manufacturer.txt"
         BufferedReader manufacturerFileReader = new BufferedReader(new FileReader(inputPath + "/manufacturer.txt"));
@@ -428,6 +429,7 @@ public class CSCI3170Proj {
             // Execute the INSERT statement
             stmt.executeUpdate(insert_manufacturer);
         }
+        manufacturerFileReader.close();
 
         // Read "part.txt"
         BufferedReader partFileReader = new BufferedReader(new FileReader(inputPath + "/part.txt"));
@@ -448,6 +450,7 @@ public class CSCI3170Proj {
             // Execute the INSERT statement
             stmt.executeUpdate(insert_part);
         }
+        partFileReader.close();
 
         // Read "salesperson.txt"
         BufferedReader salespersonFileReader = new BufferedReader(new FileReader(inputPath + "/salesperson.txt"));
@@ -465,38 +468,35 @@ public class CSCI3170Proj {
             // Execute the INSERT statement
             stmt.executeUpdate(insert_salesperson);
         }
-
-        // Read "transaction.txt"
-        BufferedReader transactionFileReader = new BufferedReader(new FileReader(inputPath + "/transaction.txt"));
-        String transactionLine;
-        SimpleDateFormat dt = new SimpleDateFormat("dd/mm/yyyy");
-        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
-        while ((transactionLine = transactionFileReader.readLine()) != null) {
-            String[] data_transaction = transactionLine.split("\t");
-            // Extract the data values
-            int tID = Integer.parseInt(data_transaction[0]);
-            int pID = Integer.parseInt(data_transaction[1]);
-            int sID = Integer.parseInt(data_transaction[2]);
-            Date tDate_temp;
-            try {
-                tDate_temp = dt.parse(data_transaction[3]);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                System.err.println("Date format ERROR");
-                return;
-            }
-            String tDate = dt1.format(tDate_temp);
-            // Create the SQL INSERT statement
-            String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + ",'" + tDate + "');";
-            // Execute the INSERT statement
-            stmt.executeUpdate(insert_transaction);
-        }
-
-        categoryFileReader.close();
-        manufacturerFileReader.close();
-        partFileReader.close();
         salespersonFileReader.close();
-        transactionFileReader.close();
+
+        try (// Read "transaction.txt"
+        BufferedReader transactionFileReader = new BufferedReader(new FileReader(inputPath + "/transaction.txt"))) {
+            String transactionLine;
+            SimpleDateFormat dt = new SimpleDateFormat("dd/mm/yyyy");
+            SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
+            while ((transactionLine = transactionFileReader.readLine()) != null) {
+                String[] data_transaction = transactionLine.split("\t");
+                // Extract the data values
+                int tID = Integer.parseInt(data_transaction[0]);
+                int pID = Integer.parseInt(data_transaction[1]);
+                int sID = Integer.parseInt(data_transaction[2]);
+                Date tDate_temp;
+                try {
+                    tDate_temp = dt.parse(data_transaction[3]);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    System.err.println("Date format ERROR");
+                    return;
+                }
+                String tDate = dt1.format(tDate_temp);
+                // Create the SQL INSERT statement
+                String insert_transaction = "INSERT INTO TRANSACTION (tID, pID, sID, tDate) VALUES (" + tID + ", " + pID + ", " + sID + ",'" + tDate + "');";
+                // Execute the INSERT statement
+                stmt.executeUpdate(insert_transaction);
+            }
+            transactionFileReader.close();
+        }
         stmt.close();
         // read files and load data from inputPath
         System.err.println("Done! Data is inputted to the database!");
