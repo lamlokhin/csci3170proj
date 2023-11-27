@@ -345,7 +345,7 @@ public class CSCI3170Proj {
         // print the parts
         System.out.println("| Part ID | Part Name | No. of Transaction |");
         while (rs.next()) {
-            System.out.printf(" | %d | %s | %d |",
+            System.out.printf("| %d | %s | %d |\n",
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getInt(3));
