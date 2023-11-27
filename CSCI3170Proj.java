@@ -271,11 +271,11 @@ public class CSCI3170Proj {
         ResultSet rs = null;
         if (input_order == 1) {
             // retrieve in ascending
-            rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience ASC");
+            rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience ASC;");
         }
         if (input_order == 2) {
             // retrieve in descending
-             rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience DESC");
+             rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM SALESPERSON ORDER BY sExperience DESC;");
         }
         // print list
         System.out.println("| ID | Name | Mobile Phone | Years of Experience |");
@@ -301,7 +301,7 @@ public class CSCI3170Proj {
         // retrieve count of sales
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
-        rs = stmt.executeQuery("SELECT s.sID, s.sName, s.sExperience, COUNT(t.tID) FROM SALESPERSON s JOIN TRANSACTION t ON s.sID = t.sID WHERE s.sExperience BETWEEN " + lower_bound + " AND " + upper_bound + " GROUP BY s.sID, s.sName, s.sExperience ORDER BY s.sID DESC");
+        rs = stmt.executeQuery("SELECT s.sID, s.sName, s.sExperience, COUNT(t.tID) FROM SALESPERSON s JOIN TRANSACTION t ON s.sID = t.sID WHERE s.sExperience BETWEEN " + lower_bound + " AND " + upper_bound + " GROUP BY s.sID, s.sName, s.sExperience ORDER BY s.sID DESC;");
 
         // print list
         System.out.println("Transaction Record:\n" +
@@ -321,7 +321,7 @@ public class CSCI3170Proj {
         // retrieve manufacturers in decending order of total sales value
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
-        rs = stmt.executeQuery("SELECT m.mID, m.mName, SUM(p.pPrice) AS total_sales_value FROM MANUFACTURER m JOIN PART p ON m.mID = p.mID GROUP BY m.mID, m.mName ORDER BY total_sales_value DESC");
+        rs = stmt.executeQuery("SELECT m.mID, m.mName, SUM(p.pPrice) AS total_sales_value FROM MANUFACTURER m JOIN PART p ON m.mID = p.mID GROUP BY m.mID, m.mName ORDER BY total_sales_value DESC;");
         // print manufacuturers
         System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
         while (rs.next()) {
@@ -338,14 +338,16 @@ public class CSCI3170Proj {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int input = Integer.parseInt(in.readLine());
         // retrieve the N most popular parts
-        ResultSet result = null;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = null;
+        rs = stmt.executeQuery("SELECT pID, pName, total_no_trans FROM( SELECT p.pID, p.pName, COUNT(t.tID) AS total_no_trans, ROWNUM AS RowNumber FROM PART p JOIN TRANSACTION t ON p.pID = t.pID GROUP BY p.pID, p.pName ORDER BY total_no_trans DESC) WHERE RowNumber <= " + input + ";");
         // print the parts
         System.out.println("| Part ID | Part Name | No. of Transaction |");
-        while (result.next()) {
-            System.out.printf(" | %s | %s | %s |",
-                    result.getString(1),
-                    result.getString(2),
-                    result.getString(3));
+        while (rs.next()) {
+            System.out.printf(" | %d | %s | %d |",
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3));
         }
         System.out.println("End of Query");
         main_menu(conn);
