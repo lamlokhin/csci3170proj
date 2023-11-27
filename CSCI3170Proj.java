@@ -301,7 +301,7 @@ public class CSCI3170Proj {
         // retrieve count of sales
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
-        rs = stmt.executeQuery("SELECT sID, sName, sExperience, COUNT(TRANSACTION.tID) FROM SALESPERSON s JOIN TRANSACTION t ON s.sID = t.sID WHERE BETWEEN" + lower_bound + " AND " + upper_bound + " ORDER BY sExperience DESC");
+        rs = stmt.executeQuery("SELECT sID, sName, sExperience, COUNT(TRANSACTION.tID) FROM SALESPERSON s JOIN TRANSACTION t ON s.sID = t.sID WHERE BETWEEN " + lower_bound + " AND " + upper_bound + " ORDER BY sExperience DESC");
 
         // print list
         System.out.println("Transaction Record:\n" +
@@ -361,7 +361,7 @@ public class CSCI3170Proj {
         String create_manufacturer_string = "CREATE TABLE MANUFACTURER(mID INT NOT NULL PRIMARY KEY, mName VARCHAR(255) NOT NULL, mAddress VARCHAR(255) NOT NULL, mPhoneNumber INT NOT NULL);";
         String create_part_string = "CREATE TABLE PART(pID INT NOT NULL PRIMARY KEY, pName VARCHAR(255) NOT NULL, pPrice INT NOT NULL, mID INT NOT NULL, cID INT NOT NULL, pWarrantyPeriod INT NOT NULL, pAvailableQuantity INT NOT NULL);";
         String create_salesperson_string = "CREATE TABLE SALESPERSON(sID INT NOT NULL PRIMARY KEY, sName VARCHAR(255) NOT NULL, sAddress VARCHAR(255) NOT NULL, sPhoneNumber INT NOT NULL, sExperience INT NOT NULL);"; 
-        String create_transaction_string = "CREATE TABLE TRANSACTION(tID INT NOT NULL PRIMARY KEY, pID INT NOT NULL, sID INT NOT NULL, tDate DATE NOT NULL);";
+        String create_transaction_string = "CREATE TABLE TRANSACTION(tID INT NOT NULL PRIMARY KEY, pID INT NOT NULL REFERENCES PART(pID), sID INT NOT NULL REFERENCES SALESPERSON(sID), tDate DATE NOT NULL);";
         stmt.executeUpdate(create_category_string);
         stmt.executeUpdate(create_manufacturer_string);
         stmt.executeUpdate(create_part_string);
