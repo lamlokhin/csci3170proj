@@ -719,7 +719,7 @@ public class CSCI3170Proj {
                             rs.getString(2));
                 }
             }
-            if (inputTable.equals("manufacturer")) {
+            else if (inputTable.equals("manufacturer")) {
                 System.out.println("| mID | mName | mAddress | mPhoneNumber |");
                 // Show content of Manufacturer
                 rs = stmt.executeQuery("SELECT * FROM MANUFACTURER");
@@ -731,7 +731,7 @@ public class CSCI3170Proj {
                             rs.getInt(4));
                 }
             }
-            if (inputTable.equals("part")) {
+            else if (inputTable.equals("part")) {
                 System.out.println("| pID | pName | pPrice | mID | cID | pWarrantyPeriod | pAvailableQuantity |");
                 // Show content of Part
                 rs = stmt.executeQuery("SELECT * FROM PART");
@@ -746,7 +746,7 @@ public class CSCI3170Proj {
                             rs.getInt(7));
                 }
             }
-            if (inputTable.equals("salesperson")) {
+            else if (inputTable.equals("salesperson")) {
                 System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
                 // Show content of Salesperson
                 rs = stmt.executeQuery("SELECT * FROM SALESPERSON");
@@ -759,7 +759,7 @@ public class CSCI3170Proj {
                             rs.getInt(5));
                 }
             }
-            if (inputTable.equals("transaction")) {
+            else if (inputTable.equals("transaction")) {
                 System.out.println("| tID | pID | sID | tDate |");
                 // Show content of Transaction
                 rs = stmt.executeQuery("SELECT * FROM TRANSACTION");
