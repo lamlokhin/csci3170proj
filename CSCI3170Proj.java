@@ -139,7 +139,7 @@ public class CSCI3170Proj {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
         /* get part id with checking */
-        System.out.print("Enter The Part ID:");
+        System.out.print("Enter The Part ID: ");
         int part_id = Integer.parseInt(in.readLine());
         String quanCheckQuery = "Select pAvailableQuantity from PART where pID = ?";
         PreparedStatement preQuanCheckQuery = conn.prepareStatement(quanCheckQuery);
@@ -161,7 +161,7 @@ public class CSCI3170Proj {
             System.out.println(
                     String.format("xxxErrorxxx:part with part id: %s have no available quantity, currently:%s\n",
                             part_id, availableQuantity));
-            System.out.println("Enter The Part ID:");
+            System.out.println("Enter The Part ID: ");
             part_id = Integer.parseInt(in.readLine());
             preQuanCheckQuery.setInt(1, part_id);
             try {
@@ -176,7 +176,7 @@ public class CSCI3170Proj {
             }
         }
         /* get salesperson id with checking */
-        System.out.print("Enter The Salesperson ID:");
+        System.out.print("Enter The Salesperson ID: ");
         int salesperson_id = Integer.parseInt(in.readLine());
         String salesPersonCheckQuery = "Select count(*) as num from SALESPERSON where sID = ?";
         PreparedStatement preSalesPersonCheckQuery = conn.prepareStatement(salesPersonCheckQuery);
