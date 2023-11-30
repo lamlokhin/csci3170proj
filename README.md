@@ -7,8 +7,6 @@
 ## List of files with description
 - CSCI3170Proj.java (file that runs the whole program)
 - mysql-jdbc.jar (driver that runs the Java file with connection to the database)
-- sample_data (folder that contains sample data for running the program)
-- demo_data (folder that contains demo data for running the program)
   
 ## Methods of compilation and execution
 1. Make sure that Java is installed on the machine.
