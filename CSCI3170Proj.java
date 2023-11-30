@@ -441,7 +441,7 @@ public class CSCI3170Proj {
         Statement stmt = conn.createStatement();
         ResultSet rs = null;
         rs = stmt.executeQuery(
-                "SELECT m.mID, m.mName, SUM(p.pPrice * COUNT(t.pID)) AS total_sales_value FROM MANUFACTURER m JOIN PART p ON m.mID = p.mID JOIN TRANSACTION t ON p.pID =t.pID WHERE p.pID = t.pID GROUP BY m.mID, m.mName ORDER BY total_sales_value DESC;");
+                "SELECT m.mID, m.mName, SUM(p.pPrice) AS total_sales_value FROM MANUFACTURER m INNER JOIN PART p ON m.mID = p.mID INNER JOIN TRANSACTION t ON p.pID =t.pID GROUP BY m.mID, m.mName ORDER BY total_sales_value DESC;");
         // print manufacuturers
         System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
         while (rs.next()) {
