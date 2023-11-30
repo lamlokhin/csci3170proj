@@ -202,19 +202,7 @@ public class CSCI3170Proj {
         }
         while (!salesPersonExist) {
             System.out.println(String.format("xxxErrorxxx:SalesPerson not exist with id: %s\n", salesperson_id));
-            System.out.println("please re-enter sales person id: ");
-            salesperson_id = Integer.parseInt(in.readLine());
-            preSalesPersonCheckQuery.setInt(1, salesperson_id);
-            try {
-                result2 = preSalesPersonCheckQuery.executeQuery();
-                if (result2.next()) {
-                    salesPersonExist = true;
-                }
-                result2.close();
-            } catch (SQLException e) {
-                System.out.println("check salesperson id sql failed");
-                main_menu(conn);
-            }
+            main_menu(conn);
         }
 
         String getLastTIDQuery = "select max(tID) from TRANSACTION;";
