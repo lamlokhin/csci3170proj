@@ -154,6 +154,23 @@ public class CSCI3170Proj {
         int availableQuantity = 0;
         ResultSet result1;
 
+        /* get salesperson id with checking */
+        System.out.print("Enter The Salesperson ID: ");
+        int salesperson_id = 0;
+        try {
+            salesperson_id = Integer.parseInt(in.readLine());
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid input. Please enter a valid integer.");
+            sell_part(conn);
+        }
+
+        String salesPersonCheckQuery = "Select count(*) as num from SALESPERSON where sID = ?";
+        PreparedStatement preSalesPersonCheckQuery = conn.prepareStatement(salesPersonCheckQuery);
+        preSalesPersonCheckQuery.setInt(1, salesperson_id);
+        Boolean salesPersonExist = false;
+        ResultSet result2;
+
+        // check part available quantity
         try {
             result1 = preQuanCheckQuery.executeQuery();
             if (result1.next()) {
@@ -163,15 +180,6 @@ public class CSCI3170Proj {
         } catch (SQLException e) {
             System.out.println("check quantity sql failed");
             main_menu(conn);
-        }
-        /* get salesperson id with checking */
-        System.out.print("Enter The Salesperson ID: ");
-        int salesperson_id = 0;
-        try {
-            salesperson_id = Integer.parseInt(in.readLine());
-        } catch (NumberFormatException e) {
-            System.err.println("Invalid input. Please enter a valid integer.");
-            sell_part(conn);
         }
 
         while (availableQuantity < 1) {
@@ -193,12 +201,7 @@ public class CSCI3170Proj {
             }
         }
 
-        String salesPersonCheckQuery = "Select count(*) as num from SALESPERSON where sID = ?";
-        PreparedStatement preSalesPersonCheckQuery = conn.prepareStatement(salesPersonCheckQuery);
-        preSalesPersonCheckQuery.setInt(1, salesperson_id);
-        Boolean salesPersonExist = false;
-
-        ResultSet result2;
+        // check salesperson id exist
         try {
             result2 = preSalesPersonCheckQuery.executeQuery();
             if (result2.next()) {
