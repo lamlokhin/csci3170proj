@@ -85,10 +85,10 @@ public class CSCI3170Proj {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int criterion = Integer.parseInt(in.readLine());
         while (criterion != 1 && criterion != 2) {
-            System.out.println("\ninvalid criterion,please input again:");
+            System.out.println("\ninvalid criterion,please input again: ");
             criterion = Integer.parseInt(in.readLine());
         }
-        System.out.print("\nType in the Search Keyword:");
+        System.out.print("\nType in the Search Keyword: ");
         String keyword = in.readLine();
         System.out.print("\nChoose ordering:\n" +
                 "1. By price, ascending order\n" +
@@ -96,7 +96,7 @@ public class CSCI3170Proj {
                 "Choose ordering: ");
         int order = Integer.parseInt(in.readLine());
         while (order != 1 && order != 2) {
-            System.out.println("\ninvalid order,please input again:");
+            System.out.println("\ninvalid order,please input again: ");
             order = Integer.parseInt(in.readLine());
         }
         String query = "select PART.pID,PART.pName,MANUFACTURER.mName,CATEGORY.cName,PART.pAvailableQuantity,PART.pWarrantyPeriod,PART.pPrice ";
@@ -213,8 +213,8 @@ public class CSCI3170Proj {
             main_menu(conn);
         }
         while (!salesPersonExist) {
-            System.out.println(String.format("xxxErrorxxx:SalesPerson not exist with id:%s\n", salesperson_id));
-            System.out.println("please re-enter sales person id:");
+            System.out.println(String.format("xxxErrorxxx:SalesPerson not exist with id: %s\n", salesperson_id));
+            System.out.println("please re-enter sales person id: ");
             salesperson_id = Integer.parseInt(in.readLine());
             preSalesPersonCheckQuery.setInt(1, salesperson_id);
             try {
