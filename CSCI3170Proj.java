@@ -140,7 +140,14 @@ public class CSCI3170Proj {
 
         /* get part id with checking */
         System.out.print("Enter The Part ID: ");
-        int part_id = Integer.parseInt(in.readLine());
+        int part_id = 0;
+        try {
+            part_id = Integer.parseInt(in.readLine());
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid input. Please input valid integer.");
+            sell_part(conn);
+        }
+        
         String quanCheckQuery = "Select pAvailableQuantity from PART where pID = ?";
         PreparedStatement preQuanCheckQuery = conn.prepareStatement(quanCheckQuery);
         preQuanCheckQuery.setInt(1, part_id);
@@ -177,7 +184,13 @@ public class CSCI3170Proj {
         }
         /* get salesperson id with checking */
         System.out.print("Enter The Salesperson ID: ");
-        int salesperson_id = Integer.parseInt(in.readLine());
+        int salesperson_id = 0;
+        try {
+            salesperson_id = Integer.parseInt(in.readLine());
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid input. Please enter a valid integer.");
+            sell_part(conn);
+        }
         String salesPersonCheckQuery = "Select count(*) as num from SALESPERSON where sID = ?";
         PreparedStatement preSalesPersonCheckQuery = conn.prepareStatement(salesPersonCheckQuery);
         preSalesPersonCheckQuery.setInt(1, salesperson_id);
@@ -234,7 +247,6 @@ public class CSCI3170Proj {
         java.sql.Date sqlDate = new java.sql.Date((new Date()).getTime());
         preAddTransactionQuery.setDate(4, sqlDate);
 
-        preAddTransactionQuery.executeUpdate();
         try {
             preAddTransactionQuery.executeUpdate();
         } catch (SQLException e) {
