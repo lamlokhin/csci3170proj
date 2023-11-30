@@ -186,19 +186,7 @@ public class CSCI3170Proj {
             System.out.println(
                     String.format("xxxErrorxxx:part with part id: %s have no available quantity, currently:%s\n",
                             part_id, availableQuantity));
-            System.out.println("Enter The Part ID: ");
-            part_id = Integer.parseInt(in.readLine());
-            preQuanCheckQuery.setInt(1, part_id);
-            try {
-                result1 = preQuanCheckQuery.executeQuery();
-                if (result1.next()) {
-                    availableQuantity = result1.getInt(1);
-                }
-                result1.close();
-            } catch (SQLException e) {
-                System.out.println("check quantity sql failed");
-                main_menu(conn);
-            }
+            main_menu(conn);
         }
 
         // check salesperson id exist
