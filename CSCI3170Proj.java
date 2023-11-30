@@ -103,9 +103,9 @@ public class CSCI3170Proj {
         query += "from PART,MANUFACTURER,CATEGORY ";
         query += "where PART.cID = CATEGORY.cID and PART.mID = MANUFACTURER.mID and ";
         if (criterion == 1) {
-            query += "PART.pName like ? ";
+            query += "PART.pName like BINARY ? ";
         } else if (criterion == 2) {
-            query += "MANUFACTURER.mName like ? ";
+            query += "MANUFACTURER.mName like BINARY ? ";
         }
         if (order == 1) {
             query += "order by PART.pPrice ASC;";
